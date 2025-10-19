@@ -1,0 +1,187 @@
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { linksAPI, categoriesAPI } from "../services/api";
+import styles from "../styles/DashBoard.module.css";
+
+function DashBoard({ onLogout }) {
+  // State
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [editingLink, setEditingLink] = useState(null);
+
+  const user = JSON.parse(localStorage.getItem("user") || {});
+
+  // Fetching data React Query //
+
+  const queryClient = useQueryClient();
+
+  const {
+    data: categories = [],
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useQuery({
+    queryKey: ["categories"], // Unique key to identify this query
+    queryFn: categoriesAPI.getAll,
+  });
+
+  const {
+    data: links = [],
+    isLoading: linksLoading,
+    error: linksError,
+  } = useQuery({
+    queryKey: ["links", selectedCategory],
+    queryFn: () => linksAPI.getAll(selectedCategory),
+  });
+
+  // changing data - Mutations //
+
+  const deleteLinkMutation = useMutation({
+    mutationFn: (linkId) => linksAPI.delete(linkId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+
+  const deleteCategoryMutation = useMutation({
+    mutationFn: (categoryId) => categoriesAPI.delete(categoryId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["links"] });
+
+      setSelectedCategory(null);
+    },
+  });
+
+  /// Handlers ///
+
+  const handleDeleteLink = (linkId) => {
+    if (window.confirm("Are you sure to delete this link ?")) {
+      deleteLinkMutation.mutate(linkId);
+    }
+  };
+
+  const handleDeleteCategory = (categoriesId) => {
+    if (window.confirm("Delete this category, links will be not deleted")) {
+      deleteCategoryMutation.mutate(categoriesId);
+    }
+  };
+
+  const handleEditLink = (link) => {
+    setEditingLink(link); // Set the link to edit
+    setIsLinkModalOpen(true); // Open the modal
+  };
+
+  const handleCreateLink = () => {
+    setEditingLink(null); // Clear editing (means we're creating new)
+    setIsLinkModalOpen(true);
+  };
+
+  // Loading and error states
+
+  // Show loading spinner while fetching initial data
+  if (categoriesLoading || linksLoading) {
+    return (
+      <div className={styles.loading}>
+        <div className={styles.spinner}></div>
+        <p>Loading your links...</p>
+      </div>
+    );
+  }
+
+  // Show error message if something went wrong
+  if (categoriesError || linksError) {
+    return (
+      <div className={styles.error}>
+        <h2>Oops! Something went wrong</h2>
+        <p>{categoriesError?.message || linksError?.message}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.dashboard}>
+      {/* NAVABR */}
+      <nav className={styles.navbar}>
+        <div className={styles.navLeft}>
+          <h1>🔗 Link Manager</h1>
+        </div>
+        <div className={styles.navRight}>
+          <span>Hello, {user.username} !</span>
+          <button onClick={onLogout} className={styles.logoutBtn}>
+            Logout
+          </button>
+        </div>
+      </nav>
+
+      <div className={styles.container}>
+        {/* SIDEBAR */}
+        <aside className={styles.sidebar}>
+          <div className={styles.sidebarHeader}>
+            <h2>Categories</h2>
+            <button
+              onClick={() => setIsCategoryModalOpen(true)}
+              className={styles.addBtn}
+              title="Add Category"
+            >
+              +
+            </button>
+          </div>
+
+          {/* "All Links" option */}
+          <div
+            className={`${styles.categoryItem} ${
+              selectedCategory === null ? styles.active : ""
+            }`}
+            onClick={() => setSelectedCategory(null)}
+          >
+            <span>📚 All Links</span>
+            <span className={styles.count}>{links.length}</span>
+          </div>
+
+          {/* List of categories */}
+          {categories.map((category) => {
+            // Count links in this category
+            const linkCount = links.filter(
+              (link) => link.category_id === category.id
+            ).length;
+
+            return (
+              <div
+                key={category.id}
+                className={`${styles.categoryItem} ${
+                  selectedCategory === category.id ? styles.active : ""
+                }`}
+                onClick={() => setSelectedCategory(category.id)}
+              >
+                <span style={{ color: category.color }}>● {category.name}</span>
+                <div className={styles.categoryActions}>
+                  <span className={styles.count}>{linkCount}</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // Don't trigger category selection
+                      handleDeleteCategory(category.id);
+                    }}
+                    className={styles.deleteBtn}
+                    title="Delete Category"
+                  >
+                    ×
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Show message if no categories */}
+          {categories.length === 0 && (
+            <p className={styles.emptyMessage}>
+              No categories yet. Create one!
+            </p>
+          )}
+        </aside>
+      </div>
+    </div>
+  );
+}
+
+export default DashBoard;
