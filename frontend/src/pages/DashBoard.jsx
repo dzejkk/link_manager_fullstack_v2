@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { linksAPI, categoriesAPI } from "../services/api";
 import styles from "../styles/DashBoard.module.css";
 import CategoryForm from "../components/CategoryForm";
+import LinkForm from "../components/LinkForm";
 
 function DashBoard({ onLogout }) {
   // State
@@ -102,13 +103,13 @@ function DashBoard({ onLogout }) {
 
   return (
     <div className={styles.dashboard}>
-      {/* NAVABR */}
+      {/* NAVBAR */}
       <nav className={styles.navbar}>
         <div className={styles.navLeft}>
           <h1>🔗 Link Manager</h1>
         </div>
         <div className={styles.navRight}>
-          <span>Hello, {user.username} !</span>
+          <span className={styles.username}>Hello, {user.username}!</span>
           <button onClick={onLogout} className={styles.logoutBtn}>
             Logout
           </button>
@@ -141,6 +142,7 @@ function DashBoard({ onLogout }) {
           </div>
 
           {/* List of categories */}
+
           {categories.map((category) => {
             // Count links in this category
             const linkCount = links.filter(
@@ -180,20 +182,102 @@ function DashBoard({ onLogout }) {
             </p>
           )}
         </aside>
-        <main>
-          <button onClick={() => isLinkModalOpen(true)}>+Add new link</button>
-        </main>
-        {isCategoryModalOpen && (
-          <div
-            className={styles.modalOverlay}
-            onClick={() => setIsCategoryModalOpen(false)}
-          >
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-              <CategoryForm onClose={() => setIsCategoryModalOpen(false)} />
-            </div>
+
+        {/* MAIN CONTENT */}
+        <main className={styles.main}>
+          <div className={styles.mainHeader}>
+            <h2>
+              {selectedCategory
+                ? categories.find((c) => c.id === selectedCategory)?.name
+                : "All Links"}
+            </h2>
+            <button onClick={handleCreateLink} className={styles.createBtn}>
+              + Add Link
+            </button>
           </div>
-        )}
+
+          {/* Links Grid */}
+          <div className={styles.linksGrid}>
+            {links.length === 0 ? (
+              <div className={styles.emptyState}>
+                <p>📭 No links yet</p>
+                <button onClick={handleCreateLink} className={styles.createBtn}>
+                  Create your first link
+                </button>
+              </div>
+            ) : (
+              links.map((link) => (
+                <div key={link.id} className={styles.linkCard}>
+                  <div className={styles.linkHeader}>
+                    <h3>{link.title}</h3>
+                    <div className={styles.linkActions}>
+                      <button
+                        onClick={() => handleEditLink(link)}
+                        className={styles.editBtn}
+                        title="Edit"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        onClick={() => handleDeleteLink(link.id)}
+                        className={styles.deleteBtn}
+                        title="Delete"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </div>
+
+                  {link.description && (
+                    <p className={styles.description}>{link.description}</p>
+                  )}
+
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkUrl}
+                  >
+                    🔗 {link.url.slice(0, 30)}
+                  </a>
+
+                  <div className={styles.linkFooter}>
+                    <span className={styles.date}>
+                      Added {new Date(link.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </main>
       </div>
+
+      {/* MODALS */}
+      {isLinkModalOpen && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setIsLinkModalOpen(false)}
+        >
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <LinkForm
+              onClose={() => setIsLinkModalOpen(false)}
+              editingLink={editingLink}
+            />
+          </div>
+        </div>
+      )}
+
+      {isCategoryModalOpen && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setIsCategoryModalOpen(false)}
+        >
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <CategoryForm onClose={() => setIsCategoryModalOpen(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

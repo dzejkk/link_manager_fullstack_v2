@@ -80,3 +80,40 @@ axios.post('/api/categories', { name, color })
 4. onSuccess and onError handle post-result actions.
 
 5. queryClient.invalidateQueries() refreshes related cached queries automatically.
+
+
+# Visual flow of the  whole project
+
+┌─────────────────────────────────────────────────────────────┐
+│                        YOUR COMPUTER                         │
+├──────────────────────────┬──────────────────────────────────┤
+│       FRONTEND           │          BACKEND                  │
+│   (React - Port 5173)    │    (Express - Port 3000)         │
+│                          │                                   │
+│  ┌─────────────────┐     │     ┌──────────────────┐         │
+│  │  LinkForm       │     │     │  routes/links.js │         │
+│  │  (Customer)     │────HTTP────▶│  (Kitchen)       │        │
+│  │                 │  Request│  │                  │         │
+│  │ "Create link"   │     │     │ "Got request!"   │         │
+│  └─────────────────┘     │     └────────┬─────────┘         │
+│           │              │              │                    │
+│           ▼              │              ▼                    │
+│  ┌─────────────────┐     │     ┌──────────────────┐         │
+│  │  api.js         │     │     │  db.js (pool)    │         │
+│  │  (Waiter)       │     │     │  (Phone to       │         │
+│  │                 │     │     │   warehouse)     │         │
+│  │ linksAPI.create │     │     └────────┬─────────┘         │
+│  │ axios.post()    │     │              │                    │
+│  └─────────────────┘     │              ▼                    │
+│           │              │     ┌──────────────────┐         │
+│           │              │     │  PostgreSQL      │         │
+│           │              │     │  (Warehouse)     │         │
+│           ▼              │     │                  │         │
+│  ┌─────────────────┐     │     │ INSERT INTO...   │         │
+│  │ React Query     │     │     └──────────────────┘         │
+│  │ (Manager)       │◀────HTTP Response─────────────────────│
+│  │                 │     │                                   │
+│  │ Cache & Update  │     │                                   │
+│  │ UI automatically│     │                                   │
+│  └─────────────────┘     │                                   │
+└──────────────────────────┴───────────────────────────────────┘
