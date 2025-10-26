@@ -71,7 +71,7 @@ function DashBoard({ onLogout }) {
 
   const handleEditLink = (link) => {
     setEditingLink(link); // Set the link to edit
-    setIsLinkModalOpen(true); // Open the modal
+    setIsLinkModalOpen(true);
   };
 
   const handleCreateLink = () => {

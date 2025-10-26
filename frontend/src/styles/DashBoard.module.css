@@ -1,6 +1,9 @@
 .dashboard {
   min-height: 100vh;
   background-color: #f5f7fa;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .navbar {
