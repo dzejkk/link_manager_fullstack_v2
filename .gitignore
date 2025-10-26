@@ -1,1 +1,15 @@
 backend/node_modules/
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+
+# Frontend env files
+frontend/.env
+frontend/.env.local
+
+# Backend env files
+backend/.env
+backend/.env.local
+EOF

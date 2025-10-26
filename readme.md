@@ -42,3 +42,41 @@ Customer: Displays links on screen
 
 So PostgreSQL is definitely the supplier/warehouse! It just stores raw data. Express is the one that knows how to get it, process it, and serve it properly.
 </p>
+
+
+# Visual flow of TanStack query data flow 
+
+User clicks "Create"
+        │
+        ▼
+handleSubmit() runs
+        │
+        ▼
+createCategoryMutation.mutate({ name, color })
+        │
+        ▼
+mutationFn(categoryData) → categoriesAPI.create(categoryData)
+        │
+        ▼
+axios.post('/api/categories', { name, color })
+        │
+        ▼
+ Backend creates category in DB
+        │
+        ▼
+ React Query receives response
+        │
+        ├─ onSuccess → invalidate queries + reset form
+        └─ onError → log or display error
+
+
+
+1. mutationFn defines how the data is sent or changed on the backend.
+
+2. mutate(argument) provides what data to send.
+
+3. The argument passed to .mutate() becomes the parameter for mutationFn.
+
+4. onSuccess and onError handle post-result actions.
+
+5. queryClient.invalidateQueries() refreshes related cached queries automatically.

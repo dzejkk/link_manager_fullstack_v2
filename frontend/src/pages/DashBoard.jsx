@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { linksAPI, categoriesAPI } from "../services/api";
 import styles from "../styles/DashBoard.module.css";
+import CategoryForm from "../components/CategoryForm";
 
 function DashBoard({ onLogout }) {
   // State
@@ -12,7 +13,7 @@ function DashBoard({ onLogout }) {
 
   const user = JSON.parse(localStorage.getItem("user") || {});
 
-  // Fetching data React Query //
+  // Fetching data with React Query //
 
   const queryClient = useQueryClient();
 
@@ -179,6 +180,19 @@ function DashBoard({ onLogout }) {
             </p>
           )}
         </aside>
+        <main>
+          <button onClick={() => isLinkModalOpen(true)}>+Add new link</button>
+        </main>
+        {isCategoryModalOpen && (
+          <div
+            className={styles.modalOverlay}
+            onClick={() => setIsCategoryModalOpen(false)}
+          >
+            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+              <CategoryForm onClose={() => setIsCategoryModalOpen(false)} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
