@@ -2,7 +2,7 @@
   min-height: 100vh;
   background-color: #f5f7fa;
   width: 100%;
-  max-width: 1600px;
+  /* max-width: 1600px; */
   margin: 0 auto;
 }
 
@@ -10,9 +10,16 @@
   background: white;
   padding: 16px 32px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+.navWrapper {
+  background: white;
+  max-width: 1600px;
+  margin: 0 auto;
+
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .navLeft h1 {
@@ -60,7 +67,7 @@
 /* SIDEBAR */
 .sidebar {
   background: white;
-  border-radius: 12px;
+  border-radius: 5px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   height: fit-content;
@@ -109,6 +116,7 @@
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.2s;
+  font-weight: 700;
 }
 
 .categoryItem:hover {
@@ -116,8 +124,8 @@
 }
 
 .categoryItem.active {
-  background-color: #e3f2fd;
-  font-weight: 600;
+  background-color: #c6cace;
+  font-weight: 900;
 }
 
 .categoryActions {

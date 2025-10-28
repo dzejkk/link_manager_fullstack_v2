@@ -28,12 +28,12 @@ function DashBoard({ onLogout }) {
   });
 
   const {
-    data: links = [],
+    data: allLinks = [],
     isLoading: linksLoading,
     error: linksError,
   } = useQuery({
-    queryKey: ["links", selectedCategory],
-    queryFn: () => linksAPI.getAll(selectedCategory),
+    queryKey: ["links"],
+    queryFn: () => linksAPI.getAll(),
   });
 
   // changing data - Mutations //
@@ -79,7 +79,11 @@ function DashBoard({ onLogout }) {
     setIsLinkModalOpen(true);
   };
 
-  // Loading and error states
+  // Importatnt fo showing correct number of links
+
+  const displayedLinks = selectedCategory
+    ? allLinks.filter((link) => link.category_id === selectedCategory)
+    : allLinks;
 
   // Show loading spinner while fetching initial data
   if (categoriesLoading || linksLoading) {
@@ -105,14 +109,16 @@ function DashBoard({ onLogout }) {
     <div className={styles.dashboard}>
       {/* NAVBAR */}
       <nav className={styles.navbar}>
-        <div className={styles.navLeft}>
-          <h1>🔗 Link Manager</h1>
-        </div>
-        <div className={styles.navRight}>
-          <span className={styles.username}>Hello, {user.username}!</span>
-          <button onClick={onLogout} className={styles.logoutBtn}>
-            Logout
-          </button>
+        <div className={styles.navWrapper}>
+          <div className={styles.navLeft}>
+            <h1>🔗 Link Manager</h1>
+          </div>
+          <div className={styles.navRight}>
+            <span className={styles.username}>Hello, {user.username}!</span>
+            <button onClick={onLogout} className={styles.logoutBtn}>
+              Logout
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -138,14 +144,14 @@ function DashBoard({ onLogout }) {
             onClick={() => setSelectedCategory(null)}
           >
             <span>📚 All Links</span>
-            <span className={styles.count}>{links.length}</span>
+            <span className={styles.count}>{allLinks.length}</span>
           </div>
 
           {/* List of categories */}
 
           {categories.map((category) => {
             // Count links in this category
-            const linkCount = links.filter(
+            const linkCount = allLinks.filter(
               (link) => link.category_id === category.id
             ).length;
 
@@ -198,7 +204,7 @@ function DashBoard({ onLogout }) {
 
           {/* Links Grid */}
           <div className={styles.linksGrid}>
-            {links.length === 0 ? (
+            {allLinks.length === 0 ? (
               <div className={styles.emptyState}>
                 <p>📭 No links yet</p>
                 <button onClick={handleCreateLink} className={styles.createBtn}>
@@ -206,7 +212,7 @@ function DashBoard({ onLogout }) {
                 </button>
               </div>
             ) : (
-              links.map((link) => (
+              displayedLinks.map((link) => (
                 <div key={link.id} className={styles.linkCard}>
                   <div className={styles.linkHeader}>
                     <h3>{link.title}</h3>
@@ -238,7 +244,7 @@ function DashBoard({ onLogout }) {
                     rel="noopener noreferrer"
                     className={styles.linkUrl}
                   >
-                    🔗 {link.url.slice(0, 30)}
+                    ↗️ {link.url.slice(0, 30)}
                   </a>
 
                   <div className={styles.linkFooter}>

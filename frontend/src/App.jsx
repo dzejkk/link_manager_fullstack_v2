@@ -3,8 +3,12 @@ import { useState, useEffect } from "react";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import { QueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 function App() {
+  const queryClient = useQueryClient(); // to use clear() method
+
   const [currentPage, setCurrentPage] = useState("login");
 
   // Track if user is logged in
@@ -27,6 +31,7 @@ function App() {
     localStorage.removeItem("user");
     setIsAuthenticated(false);
     setCurrentPage("login");
+    queryClient.clear(); // important !
   };
 
   return (
