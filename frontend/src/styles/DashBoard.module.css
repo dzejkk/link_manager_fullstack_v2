@@ -1,31 +1,30 @@
 .dashboard {
   min-height: 100vh;
-  background-color: #f5f7fa;
+  background-color: var(--background);
   width: 100%;
   /* max-width: 1600px; */
   margin: 0 auto;
 }
 
 .navbar {
-  background: white;
+  background: var(--background);
   padding: 16px 32px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
   align-items: center;
 }
 
 .navWrapper {
-  background: white;
+  background: var(--background);
   max-width: 1600px;
   margin: 0 auto;
-
   display: flex;
   justify-content: space-between;
 }
 
 .navLeft h1 {
   margin: 0;
-  font-size: 24px;
-  color: #333;
+  font-size: 1.5rem;
+  color: var(--foreground);
 }
 
 .navRight {
@@ -35,24 +34,25 @@
 }
 
 .username {
-  color: #666;
-  font-size: 14px;
+  color: var(--secondary-foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .logoutBtn {
   padding: 8px 16px;
-  background-color: #e74c3c;
-  color: white;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.8rem;
   font-weight: 600;
-  transition: background-color 0.3s;
+  transition: all ease-in-out 0.3s;
 }
 
 .logoutBtn:hover {
-  background-color: #c0392b;
+  filter: brightness(1.1);
 }
 
 .container {
@@ -66,13 +66,14 @@
 
 /* SIDEBAR */
 .sidebar {
-  background: white;
-  border-radius: 5px;
+  background: var(--card);
+  border-radius: var(--radius-sm);
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-sm);
   height: fit-content;
   position: sticky;
   top: 24px;
+  color: var(--card-foreground);
 }
 
 .sidebarHeader {
@@ -84,8 +85,10 @@
 
 .sidebarHeader h2 {
   margin: 0;
-  font-size: 18px;
-  color: #333;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--foreground);
+  text-transform: uppercase;
 }
 
 .addBtn {
@@ -93,8 +96,8 @@
   height: 28px;
   border-radius: 50%;
   border: none;
-  background: #3498db;
-  color: white;
+  background: var(--primary);
+  color: var(--primary-foreground);
   font-size: 20px;
   cursor: pointer;
   display: flex;
@@ -104,13 +107,14 @@
 }
 
 .addBtn:hover {
-  background: #2980b9;
+  background-color: var(--accent);
+  color: var(--accent-foreground);
 }
 
 .categoryItem {
   padding: 12px;
   margin-bottom: 8px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -120,11 +124,11 @@
 }
 
 .categoryItem:hover {
-  background-color: #f0f4f8;
+  background-color: var(--accent);
 }
 
 .categoryItem.active {
-  background-color: #c6cace;
+  background-color: var(--accent);
   font-weight: 900;
 }
 
@@ -145,7 +149,7 @@
 .deleteBtn {
   background: none;
   border: none;
-  color: #e74c3c;
+  color: var(--destructive);
   font-size: 20px;
   cursor: pointer;
   padding: 0;
@@ -169,10 +173,10 @@
 
 /* MAIN CONTENT */
 .main {
-  background: white;
-  border-radius: 12px;
+  background: var(--muted);
+  border-radius: var(--radius-sm);
   padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-xs);
   min-height: 600px;
 }
 
@@ -186,17 +190,17 @@
 .mainHeader h2 {
   margin: 0;
   font-size: 24px;
-  color: #333;
+  color: var(--card-foreground);
 }
 
 .createBtn {
   padding: 10px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(180deg, #cb6441 90%, #3d3826 0%);
+  color: var(--primary-foreground);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.85rem;
   font-weight: 600;
   transition: transform 0.2s;
 }
@@ -213,16 +217,17 @@
 }
 
 .linkCard {
-  background: white;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 20px;
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  padding: 2rem;
   transition: all 0.3s;
+  border-radius: 2px;
 }
 
 .linkCard:hover {
-  border-color: #667eea;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+  box-shadow: var(--shadow-xs);
   transform: translateY(-2px);
 }
 
@@ -236,7 +241,7 @@
 .linkHeader h3 {
   margin: 0;
   font-size: 18px;
-  color: #333;
+  color: var(--card-foreground);
   flex: 1;
 }
 
@@ -254,7 +259,7 @@
 }
 
 .description {
-  color: #666;
+  color: var(--muted-foreground);
   font-size: 14px;
   margin-bottom: 12px;
   line-height: 1.5;
@@ -262,11 +267,14 @@
 
 .linkUrl {
   display: block;
-  color: #3498db;
+  background-color: color-mix(in oklab, var(--primary) 10%, transparent);
+  color: var(--primary);
   text-decoration: none;
   font-size: 14px;
   margin-bottom: 12px;
   word-break: break-all;
+  width: 70%;
+  border-radius: var(--radius);
 }
 
 .linkUrl:hover {
@@ -279,11 +287,12 @@
   align-items: center;
   padding-top: 12px;
   border-top: 1px solid #e0e0e0;
+  color: var(--muted-foreground);
 }
 
 .date {
   font-size: 12px;
-  color: #999;
+  color: var(--muted-foreground);
 }
 
 .emptyState {
@@ -312,7 +321,7 @@
   width: 50px;
   height: 50px;
   border: 4px solid #e0e0e0;
-  border-top-color: #667eea;
+  border-top-color: var(--ring);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -329,7 +338,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  color: #e74c3c;
+  color: var(--primary);
 }
 
 /* MODALS */

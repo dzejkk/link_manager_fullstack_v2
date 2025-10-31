@@ -28,7 +28,7 @@ export default function LinkForm({ onClose, editingLink }) {
 
   const queryClient = useQueryClient();
 
-  //ONE MUTATION HADNLE UPDATE LASO CREATE
+  //ONE MUTATION HADNLE UPDATE ALSO CREATE
 
   const saveLinkMutation = useMutation({
     mutationFn: (linkData) => {
