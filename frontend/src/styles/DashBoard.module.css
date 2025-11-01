@@ -19,12 +19,15 @@
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .navLeft h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--foreground);
+  font-family: var(--font-serif);
+  font-weight: 400;
 }
 
 .navRight {
@@ -41,10 +44,10 @@
 
 .logoutBtn {
   padding: 8px 16px;
-  background-color: var(--primary);
-  color: var(--primary-foreground);
+  background-color: var(--destructive);
+  color: var(--sidebar-primary-foreground);
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   cursor: pointer;
   font-size: 0.8rem;
   font-weight: 600;
@@ -52,7 +55,11 @@
 }
 
 .logoutBtn:hover {
-  filter: brightness(1.1);
+  background-color: color-mix(
+    in oklab,
+    var(--destructive) 85%,
+    var(--popover) 15%
+  );
 }
 
 .container {
@@ -66,14 +73,14 @@
 
 /* SIDEBAR */
 .sidebar {
-  background: var(--card);
+  background: var(--background);
   border-radius: var(--radius-sm);
   padding: 20px;
-  box-shadow: var(--shadow-sm);
   height: fit-content;
   position: sticky;
   top: 24px;
   color: var(--card-foreground);
+  line-height: 1.4;
 }
 
 .sidebarHeader {
@@ -85,10 +92,12 @@
 
 .sidebarHeader h2 {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.5rem;
+  height: 2rem;
+  line-height: 1.1;
+  font-weight: 600;
   color: var(--foreground);
-  text-transform: uppercase;
+  font-family: var(--font-serif);
 }
 
 .addBtn {
@@ -120,7 +129,8 @@
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.2s;
-  font-weight: 700;
+  font-weight: 400;
+  font-size: 1.25rem;
 }
 
 .categoryItem:hover {
@@ -129,7 +139,7 @@
 
 .categoryItem.active {
   background-color: var(--accent);
-  font-weight: 900;
+  font-weight: 600;
 }
 
 .categoryActions {
@@ -139,11 +149,10 @@
 }
 
 .count {
-  background: #e0e0e0;
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 12px;
-  color: #666;
+  color: var(--destructive);
 }
 
 .deleteBtn {
@@ -173,10 +182,9 @@
 
 /* MAIN CONTENT */
 .main {
-  background: var(--muted);
+  background: var(--background);
   border-radius: var(--radius-sm);
   padding: 24px;
-  box-shadow: var(--shadow-xs);
   min-height: 600px;
 }
 
@@ -194,15 +202,23 @@
 }
 
 .createBtn {
-  padding: 10px 20px;
-  background: linear-gradient(180deg, #cb6441 90%, #3d3826 0%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1rem;
+  padding: 5px 15px;
+  background: var(--primary);
   color: var(--primary-foreground);
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   cursor: pointer;
   font-size: 0.85rem;
   font-weight: 600;
   transition: transform 0.2s;
+}
+
+.createBtn > p {
+  padding: 0;
 }
 
 .createBtn:hover {
@@ -217,12 +233,13 @@
 }
 
 .linkCard {
-  background: var(--card);
+  background: var(--popover);
   color: var(--card-foreground);
   border: 1px solid var(--border);
-  padding: 2rem;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xs);
+  padding: 1.5rem;
   transition: all 0.3s;
-  border-radius: 2px;
 }
 
 .linkCard:hover {
@@ -253,9 +270,19 @@
 .editBtn {
   background: none;
   border: none;
+  color: var(--destructive);
+  font-size: 20px;
   cursor: pointer;
-  font-size: 16px;
-  padding: 4px;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editBtn:hover {
+  color: var(--primary);
 }
 
 .description {
@@ -267,13 +294,14 @@
 
 .linkUrl {
   display: block;
-  background-color: color-mix(in oklab, var(--primary) 10%, transparent);
+  background-color: color-mix(in oklab, var(--primary) 5%, transparent 95%);
   color: var(--primary);
   text-decoration: none;
+  font-family: var(--font-mono);
   font-size: 14px;
   margin-bottom: 12px;
   word-break: break-all;
-  width: 70%;
+  width: 80%;
   border-radius: var(--radius);
 }
 

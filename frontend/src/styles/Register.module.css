@@ -1,17 +1,20 @@
 .container {
-  min-height: 100dvh;
+  min-height: 90dvh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--background);
   padding: 20px;
+
+  animation: fade-in 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .registerBox {
-  background: white;
+  background: var(--background);
   padding: 40px;
-  border-radius: 2px;
+  border-radius: var(--radius-xl);
   border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
   width: 100%;
   max-width: 420px;
 }
@@ -51,7 +54,7 @@
 .inputGroup input {
   padding: 12px 16px;
   border: 1px solid var(--border);
-  border-radius: 2px;
+  border-radius: var(--radius);
   font-size: 15px;
   transition: border-color 0.3s;
 }
@@ -77,10 +80,10 @@
 
 .registerButton {
   padding: 14px;
-  background: var(--popover);
-  color: var(--popover-foreground);
-  border: 1px solid var(--primary);
-  border-radius: 2px;
+  background: var(--foreground);
+  color: var(--background);
+  border-radius: var(--radius);
+  border: none;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -89,8 +92,12 @@
 }
 
 .registerButton:hover:not(:disabled) {
-  background-color: var(--accent);
-  border-color: var(--border);
+  background-color: color-mix(
+    in oklab,
+    var(--background) 10%,
+    var(--foreground) 90%
+  );
+  color: color-mix(in oklab, var(--destructive) 5%, var(--background) 95%);
 }
 
 .registerButton:disabled {
@@ -120,4 +127,13 @@
 
 .switchButton:hover {
   text-decoration: underline;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

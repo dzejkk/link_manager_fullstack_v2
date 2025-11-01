@@ -3,15 +3,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(30deg, #faf8f1 60%, #e7e4dd 100%);
+  background: var(--background);
   padding: 20px;
+
+  animation: fade-in 0.5s ease-in-out;
 }
 
 .loginBox {
-  background: var(--popover);
+  background: var(--background);
   border: 1px solid var(--border);
   padding: 40px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
   width: 100%;
   max-width: 400px;
 }
@@ -51,7 +54,7 @@
 .inputGroup input {
   padding: 12px 16px;
   border: 1px solid #e0e0e0;
-  border-radius: 2px;
+  border-radius: var(--radius);
   font-size: 15px;
   transition: border-color 0.3s;
 }
@@ -77,20 +80,21 @@
 
 .loginButton {
   padding: 14px;
-  background: var(--primary);
+  background: var(--foreground);
   color: var(--primary-foreground);
   border: none;
-  border-radius: 2px;
+  border-radius: var(--radius);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
   margin-top: 10px;
+  transition: all 0.3s ease-in-out;
 }
 
 .loginButton:hover:not(:disabled) {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  filter: brightness(1.2);
 }
 
 .loginButton:disabled {
@@ -120,4 +124,13 @@
 
 .switchButton:hover {
   text-decoration: underline;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

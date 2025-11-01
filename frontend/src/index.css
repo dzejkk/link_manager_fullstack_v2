@@ -1,9 +1,9 @@
 :root {
-  --background: oklch(0.98 0.01 93.48);
+  --background: #faf9f5;
   --foreground: oklch(0.34 0.03 94.42);
   --card: oklch(0.98 0.01 93.48);
   --card-foreground: oklch(0.19 0 0);
-  --popover: oklch(1 0 0);
+  --popover: oklch(100% 0.00011 271.152);
   --popover-foreground: oklch(0.27 0.02 99.7);
   --primary: oklch(0.62 0.14 39.15);
   --primary-foreground: oklch(1 0 0);
@@ -42,6 +42,7 @@
 
   --radius: 0.5rem;
   --radius-sm: 0.125rem;
+  --radius-xl: 2.5rem;
 
   --shadow-2xs: 0 1px 3px 0px oklch(0 0 0 / 0.05);
   --shadow-xs: 0 1px 3px 0px oklch(0 0 0 / 0.05);
@@ -110,5 +111,5 @@ body {
   margin: 0 auto;
   background-color: var(--background);
   color: var(--foreground);
-  line-height: 1.1rem;
+  line-height: 1.5rem;
 }

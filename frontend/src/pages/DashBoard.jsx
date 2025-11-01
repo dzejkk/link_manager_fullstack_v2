@@ -4,6 +4,7 @@ import { linksAPI, categoriesAPI } from "../services/api";
 import styles from "../styles/DashBoard.module.css";
 import CategoryForm from "../components/CategoryForm";
 import LinkForm from "../components/LinkForm";
+import { Pencil, Trash, Plus } from "lucide-react";
 
 function DashBoard({ onLogout }) {
   // State
@@ -111,7 +112,7 @@ function DashBoard({ onLogout }) {
       <nav className={styles.navbar}>
         <div className={styles.navWrapper}>
           <div className={styles.navLeft}>
-            <h1>🔗 Link Manager</h1>
+            <h1>Link Manager</h1>
           </div>
           <div className={styles.navRight}>
             <span className={styles.username}>Hello, {user.username}!</span>
@@ -132,7 +133,7 @@ function DashBoard({ onLogout }) {
               className={styles.addBtn}
               title="Add Category"
             >
-              +
+              <Plus />
             </button>
           </div>
 
@@ -143,7 +144,7 @@ function DashBoard({ onLogout }) {
             }`}
             onClick={() => setSelectedCategory(null)}
           >
-            <span>📚 All Links</span>
+            <span>All Links</span>
             <span className={styles.count}>{allLinks.length}</span>
           </div>
 
@@ -163,9 +164,14 @@ function DashBoard({ onLogout }) {
                 }`}
                 onClick={() => setSelectedCategory(category.id)}
               >
-                <span style={{ color: category.color }}>● {category.name}</span>
+                <span>{category.name}</span>
                 <div className={styles.categoryActions}>
-                  <span className={styles.count}>{linkCount}</span>
+                  <span
+                    style={{ background: category.color }}
+                    className={styles.count}
+                  >
+                    {linkCount}
+                  </span>
                   <button
                     onClick={(e) => {
                       e.stopPropagation(); // Don't trigger category selection
@@ -198,7 +204,8 @@ function DashBoard({ onLogout }) {
                 : "All Links"}
             </h2>
             <button onClick={handleCreateLink} className={styles.createBtn}>
-              + Add Link
+              <Plus size={18} />
+              <p>Add Link</p>
             </button>
           </div>
 
@@ -222,14 +229,14 @@ function DashBoard({ onLogout }) {
                         className={styles.editBtn}
                         title="Edit"
                       >
-                        ✏️
+                        <Pencil size={18} />
                       </button>
                       <button
                         onClick={() => handleDeleteLink(link.id)}
                         className={styles.deleteBtn}
                         title="Delete"
                       >
-                        🗑️
+                        <Trash size={18} />
                       </button>
                     </div>
                   </div>
