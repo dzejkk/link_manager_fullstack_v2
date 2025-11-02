@@ -4,7 +4,13 @@ import { linksAPI, categoriesAPI } from "../services/api";
 import styles from "../styles/DashBoard.module.css";
 import CategoryForm from "../components/CategoryForm";
 import LinkForm from "../components/LinkForm";
-import { Pencil, Trash, Plus } from "lucide-react";
+import {
+  Pencil,
+  Trash,
+  Plus,
+  LogOut,
+  SquareArrowOutUpRight,
+} from "lucide-react";
 
 function DashBoard({ onLogout }) {
   // State
@@ -117,7 +123,8 @@ function DashBoard({ onLogout }) {
           <div className={styles.navRight}>
             <span className={styles.username}>Hello, {user.username}!</span>
             <button onClick={onLogout} className={styles.logoutBtn}>
-              Logout
+              <LogOut size={18} />
+              <p>Logout</p>
             </button>
           </div>
         </div>
@@ -251,7 +258,14 @@ function DashBoard({ onLogout }) {
                     rel="noopener noreferrer"
                     className={styles.linkUrl}
                   >
-                    ↗️ {link.url.slice(0, 30)}
+                    <SquareArrowOutUpRight
+                      size={16}
+                      style={{
+                        verticalAlign: "middle",
+                        paddingInlineEnd: "0.25rem",
+                      }}
+                    />{" "}
+                    {link.url.slice(0, 30)}
                   </a>
 
                   <div className={styles.linkFooter}>

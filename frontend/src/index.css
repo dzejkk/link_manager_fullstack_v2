@@ -113,3 +113,8 @@ body {
   color: var(--foreground);
   line-height: 1.5rem;
 }
+
+p {
+  margin: 0;
+  padding: 0;
+}
