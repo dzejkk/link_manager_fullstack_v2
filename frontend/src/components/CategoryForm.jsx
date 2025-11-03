@@ -86,9 +86,7 @@ function CategoryForm({ onClose }) {
               disabled={createCategoryMutation.isPending}
               className={styles.colorInput}
             />
-            <span className={styles.colorPreview} style={{ color: color }}>
-              ● {name || "Preview"}
-            </span>
+            <span className={styles.colorPreview}>● {name || "Preview"}</span>
           </div>
         </div>
 

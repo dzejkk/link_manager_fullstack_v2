@@ -286,6 +286,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease-in-out;
 }
 
 .editBtn:hover {
@@ -391,15 +392,17 @@
 }
 
 .modal {
-  background: white;
+  background: var(--popover);
   padding: 30px;
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   max-width: 500px;
   width: 90%;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+
+  animation: slide-in 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-/* ANIIMATION */
+/* ANIIMATIONS */
 
 @keyframes fade-in {
   from {
@@ -407,5 +410,16 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

@@ -4,6 +4,7 @@ backend/node_modules/
 .env.*.local
 **/.env
 **/.env.local
+node_modules
 
 # Frontend env files
 frontend/.env

@@ -5,7 +5,7 @@
 .formContainer h3 {
   margin: 0 0 24px 0;
   font-size: 22px;
-  color: #333;
+  color: var(--foreground);
 }
 
 .form {
@@ -36,7 +36,7 @@
 
 .inputGroup input[type="text"]:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: var(--primary);
 }
 
 .inputGroup input:disabled {
@@ -105,7 +105,7 @@
 }
 
 .submitButton {
-  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  background: var(--destructive);
   color: white;
 }
 
