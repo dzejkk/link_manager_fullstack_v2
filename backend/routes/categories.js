@@ -4,7 +4,7 @@ import { authenticateToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Get all categories for logged-in user
+// Get all categories for logged-in user // check is it asycn and non blocking
 router.get("/", authenticateToken, async (req, res) => {
   try {
     const result = await pool.query(

@@ -2,18 +2,24 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { categoriesAPI } from "../services/api";
 import styles from "../styles/CategoryForm.module.css";
+import ColorPicker from "./ColorPicker";
+
+const palette = [
+  "#e3dacc", // bezova
+  "#bcd1ca", // kaktus
+  "#cbcadb", // purplish
+  "#6a9bcc", // bluish
+  "#788c5d", // greenish
+  "#c46686", // violetish
+  "#bfc0bb", // gray
+];
 
 function CategoryForm({ onClose }) {
-  // ===========================================
-  // STATE - Form inputs
-  // ===========================================
+  // STATE
   const [name, setName] = useState("");
   const [color, setColor] = useState("#3b82f6");
 
-  // ===========================================
   // REACT QUERY SETUP
-  // ===========================================
-
   const queryClient = useQueryClient();
 
   const createCategoryMutation = useMutation({
@@ -25,7 +31,6 @@ function CategoryForm({ onClose }) {
 
       setName("");
       setColor("#3b82f6");
-
       onClose();
     },
 
@@ -34,14 +39,10 @@ function CategoryForm({ onClose }) {
     },
   });
 
-  // ===========================================
   // FORM HANDLERS
-  // ===========================================
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation
     if (!name.trim()) {
       alert("Please enter a category name");
       return;
@@ -50,10 +51,6 @@ function CategoryForm({ onClose }) {
     // Trigger the mutation ({ argument for mutationFn})
     createCategoryMutation.mutate({ name, color });
   };
-
-  // ===========================================
-  // RENDER
-  // ===========================================
 
   return (
     <div className={styles.formContainer}>
@@ -77,17 +74,8 @@ function CategoryForm({ onClose }) {
         {/* Color Picker */}
         <div className={styles.inputGroup}>
           <label htmlFor="categoryColor">Color</label>
-          <div className={styles.colorPickerContainer}>
-            <input
-              id="categoryColor"
-              type="color"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
-              disabled={createCategoryMutation.isPending}
-              className={styles.colorInput}
-            />
-            <span className={styles.colorPreview}>● {name || "Preview"}</span>
-          </div>
+          <ColorPicker value={color} onChange={setColor} colors={palette} />
+          <p>Selected color" {color}</p>
         </div>
 
         {/* Show error if creation fails */}
