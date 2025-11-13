@@ -1,9 +1,17 @@
 .categoryGroup {
   background: #fff;
+  min-height: 10rem;
   border-radius: 12px;
+  border: 1px solid transparent;
   padding: 1rem;
   margin-bottom: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-in-out;
+}
+
+.categoryGroup:hover {
+  background-color: color-mix(in srgb, var(--hover-color) 15%, white 85%);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--hover-color) 25%, transparent);
 }
 
 .groupTitle {
@@ -36,5 +44,5 @@
 }
 
 .compactLink:hover {
-  color: var(--accent-color);
+  color: var(--ring);
 }

@@ -4,7 +4,10 @@ import { SquareArrowOutUpRight } from "lucide-react";
 
 export default function CategoryContainer({ category, links }) {
   return (
-    <div className={styles.categoryGroup}>
+    <div
+      className={styles.categoryGroup}
+      style={{ "--hover-color": category.color }}
+    >
       <h3
         className={styles.groupTitle}
         style={{ borderLeft: `4px solid ${category.color || "#ccc"}` }}
