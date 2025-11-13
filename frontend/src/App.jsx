@@ -2,7 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/DashBoard";
 import { useQueryClient } from "@tanstack/react-query";
 
 function App() {
