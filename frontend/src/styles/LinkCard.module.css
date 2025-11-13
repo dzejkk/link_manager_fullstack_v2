@@ -1,0 +1,110 @@
+.linkCard {
+  background: var(--popover);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xs);
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+
+.linkCard:hover {
+  border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+  box-shadow: var(--shadow-xs);
+  transform: translateY(-2px);
+}
+
+.linkHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.linkHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--card-foreground);
+  flex: 1;
+}
+
+.linkActions {
+  display: flex;
+  gap: 8px;
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  color: var(--destructive);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.editBtn:hover {
+  color: var(--primary);
+}
+
+.description {
+  color: var(--muted-foreground);
+  font-size: 14px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.linkUrl {
+  display: block;
+  background-color: color-mix(in oklab, var(--primary) 5%, transparent 95%);
+  color: var(--primary);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  margin-bottom: 12px;
+  word-break: break-all;
+  width: 80%;
+  border-radius: var(--radius);
+}
+
+.linkUrl:hover {
+  text-decoration: underline;
+}
+
+.linkFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #e0e0e0;
+  color: var(--muted-foreground);
+}
+
+.date {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: var(--destructive);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.deleteBtn:hover {
+  color: #c0392b;
+}

@@ -117,3 +117,27 @@ axios.post('/api/categories', { name, color })
 │  │ UI automatically│     │                                   │
 │  └─────────────────┘     │                                   │
 └──────────────────────────┴───────────────────────────────────┘
+
+
+** To do ** 
+
+- [] break main dashboard to smaller components
+- [] check for improvements with AI, expecialy in dashboard component
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------
+- [] todo item one
+- [x] completed item

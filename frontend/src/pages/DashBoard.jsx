@@ -11,6 +11,8 @@ import {
   LogOut,
   SquareArrowOutUpRight,
 } from "lucide-react";
+import LinkCard from "../components/LinkCard";
+import CategoryContainer from "../components/CategoryContainer";
 
 function DashBoard({ onLogout }) {
   // State
@@ -86,11 +88,25 @@ function DashBoard({ onLogout }) {
     setIsLinkModalOpen(true);
   };
 
-  // Importatnt fo showing correct number of links
+  // Important fo showing correct number of links
 
   const displayedLinks = selectedCategory
     ? allLinks.filter((link) => link.category_id === selectedCategory)
     : allLinks;
+
+  // NEW Group links view - different layout for all links view
+
+  const groupedLinks =
+    selectedCategory === null
+      ? allLinks.reduce((groups, link) => {
+          const categoryId = link.category_id || "uncategorized";
+          if (!groups[categoryId]) {
+            groups[categoryId] = [];
+          }
+          groups[categoryId].push(link);
+          return groups;
+        }, {})
+      : null;
 
   // Show loading spinner while fetching initial data
   if (categoriesLoading || linksLoading) {
@@ -225,55 +241,32 @@ function DashBoard({ onLogout }) {
                   Create your first link
                 </button>
               </div>
+            ) : selectedCategory === null ? (
+              // --- GROUPED LINKS VIEW ---
+              Object.entries(groupedLinks).map(([categoryId, links]) => {
+                const category = categories.find(
+                  (cat) => cat.id === categoryId
+                ) || {
+                  name: "Uncategorized",
+                  color: "#ccc",
+                };
+
+                return (
+                  <CategoryContainer
+                    key={categoryId}
+                    category={category}
+                    links={links}
+                  />
+                );
+              })
             ) : (
+              // --- SINGLE CATEGORY LINKS VIEW ---
               displayedLinks.map((link) => (
-                <div key={link.id} className={styles.linkCard}>
-                  <div className={styles.linkHeader}>
-                    <h3>{link.title}</h3>
-                    <div className={styles.linkActions}>
-                      <button
-                        onClick={() => handleEditLink(link)}
-                        className={styles.editBtn}
-                        title="Edit"
-                      >
-                        <Pencil size={18} />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteLink(link.id)}
-                        className={styles.deleteBtn}
-                        title="Delete"
-                      >
-                        <Trash size={18} />
-                      </button>
-                    </div>
-                  </div>
-
-                  {link.description && (
-                    <p className={styles.description}>{link.description}</p>
-                  )}
-
-                  <a
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.linkUrl}
-                  >
-                    <SquareArrowOutUpRight
-                      size={16}
-                      style={{
-                        verticalAlign: "middle",
-                        paddingInlineEnd: "0.25rem",
-                      }}
-                    />{" "}
-                    {link.url.slice(0, 30)}
-                  </a>
-
-                  <div className={styles.linkFooter}>
-                    <span className={styles.date}>
-                      Added {new Date(link.created_at).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
+                <LinkCard
+                  link={link}
+                  onDelete={handleDeleteLink}
+                  onEdit={handleEditLink}
+                />
               ))
             )}
           </div>
