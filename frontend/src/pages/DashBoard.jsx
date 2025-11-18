@@ -90,9 +90,12 @@ function DashBoard({ onLogout }) {
 
   // Important fo showing correct number of links
 
-  const displayedLinks = selectedCategory
-    ? allLinks.filter((link) => link.category_id === selectedCategory)
-    : allLinks;
+  const displayedLinks =
+    selectedCategory === "uncategorized"
+      ? allLinks.filter((link) => link.category_id === null)
+      : selectedCategory
+      ? allLinks.filter((link) => link.category_id === selectedCategory)
+      : allLinks;
 
   // NEW Group links view - different layout for all links view
 
@@ -210,6 +213,22 @@ function DashBoard({ onLogout }) {
             );
           })}
 
+          {/* NEW - place for uncategorized links */}
+
+          {allLinks.filter((link) => link.category_id === null).length > 0 && (
+            <div
+              className={`${styles.categoryItem} ${
+                selectedCategory === "uncategorized" ? styles.active : ""
+              }`}
+              onClick={() => setSelectedCategory("uncategorized")}
+            >
+              <span styles={{ color: "#999" }}>● Uncategorized</span>
+              <span className={styles.count}>
+                {allLinks.filter((link) => link.category_id === null).length}
+              </span>
+            </div>
+          )}
+
           {/* Show message if no categories */}
           {categories.length === 0 && (
             <p className={styles.emptyMessage}>
@@ -263,6 +282,7 @@ function DashBoard({ onLogout }) {
               // --- SINGLE CATEGORY LINKS VIEW ---
               displayedLinks.map((link) => (
                 <LinkCard
+                  key={link.id}
                   link={link}
                   onDelete={handleDeleteLink}
                   onEdit={handleEditLink}

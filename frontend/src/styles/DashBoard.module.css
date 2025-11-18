@@ -99,8 +99,8 @@
   margin: 0;
   font-size: 1.5rem;
   height: 2rem;
-  line-height: 1.1;
-  font-weight: 600;
+  line-height: 1.5;
+  font-weight: 500;
   color: var(--foreground);
   font-family: var(--font-serif);
 }

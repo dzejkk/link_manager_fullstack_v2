@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  QueryClientProvider,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { categoriesAPI, linksAPI } from "../services/api";
 import styles from "../styles/LinkForm.module.css";
 
@@ -83,7 +78,7 @@ export default function LinkForm({ onClose, editingLink }) {
       title,
       url,
       description,
-      category_id: categoryId || null, // Convert empty string to null
+      category_id: categoryId && categoryId !== "" ? categoryId : null, // Convert empty string to null
     };
 
     // Trigger the mutation
