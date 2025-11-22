@@ -108,3 +108,11 @@
 .deleteBtn:hover {
   color: #c0392b;
 }
+
+.favicon {
+  width: 18px;
+  border-radius: var(--radius);
+  background-color: var(--background);
+  padding: 0.25rem;
+  margin-inline-end: 0.5rem;
+}

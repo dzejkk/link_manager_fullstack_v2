@@ -4,18 +4,14 @@ import { linksAPI, categoriesAPI } from "../services/api";
 import styles from "../styles/DashBoard.module.css";
 import CategoryForm from "../components/CategoryForm";
 import LinkForm from "../components/LinkForm";
-import {
-  Pencil,
-  Trash,
-  Plus,
-  LogOut,
-  SquareArrowOutUpRight,
-} from "lucide-react";
+import { Plus } from "lucide-react";
 import LinkCard from "../components/LinkCard";
 import CategoryContainer from "../components/CategoryContainer";
+import Navbar from "../components/Navbar";
+import SideBar from "../components/Sidebar";
 
 function DashBoard({ onLogout }) {
-  // State
+  // STATE
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
@@ -23,7 +19,7 @@ function DashBoard({ onLogout }) {
 
   const user = JSON.parse(localStorage.getItem("user") || {});
 
-  // Fetching data with React Query //
+  // TANSTACK QUERY
 
   const queryClient = useQueryClient();
 
@@ -64,7 +60,7 @@ function DashBoard({ onLogout }) {
     },
   });
 
-  /// Handlers ///
+  /// HANDLERS ///
 
   const handleDeleteLink = (linkId) => {
     if (window.confirm("Are you sure to delete this link ?")) {
@@ -134,108 +130,18 @@ function DashBoard({ onLogout }) {
   return (
     <div className={styles.dashboard}>
       {/* NAVBAR */}
-      <nav className={styles.navbar}>
-        <div className={styles.navWrapper}>
-          <div className={styles.navLeft}>
-            <h1>Link Manager</h1>
-          </div>
-          <div className={styles.navRight}>
-            <span className={styles.username}>Hello, {user.username}!</span>
-            <button onClick={onLogout} className={styles.logoutBtn}>
-              <LogOut size={18} />
-              <p>Logout</p>
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Navbar onLogout={onLogout} user={user} />
 
       <div className={styles.container}>
         {/* SIDEBAR */}
-        <aside className={styles.sidebar}>
-          <div className={styles.sidebarHeader}>
-            <h2>Categories</h2>
-            <button
-              onClick={() => setIsCategoryModalOpen(true)}
-              className={styles.addBtn}
-              title="Add Category"
-            >
-              <Plus />
-            </button>
-          </div>
-
-          {/* "All Links" option */}
-          <div
-            className={`${styles.categoryItem} ${
-              selectedCategory === null ? styles.active : ""
-            }`}
-            onClick={() => setSelectedCategory(null)}
-          >
-            <span>All Links</span>
-            <span className={styles.count}>{allLinks.length}</span>
-          </div>
-
-          {/* List of categories */}
-
-          {categories.map((category) => {
-            // Count links in this category
-            const linkCount = allLinks.filter(
-              (link) => link.category_id === category.id
-            ).length;
-
-            return (
-              <div
-                key={category.id}
-                className={`${styles.categoryItem} ${
-                  selectedCategory === category.id ? styles.active : ""
-                }`}
-                onClick={() => setSelectedCategory(category.id)}
-              >
-                <span>{category.name}</span>
-                <div className={styles.categoryActions}>
-                  <span
-                    style={{ background: category.color }}
-                    className={styles.count}
-                  >
-                    {linkCount}
-                  </span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); // Don't trigger category selection
-                      handleDeleteCategory(category.id);
-                    }}
-                    className={styles.deleteBtn}
-                    title="Delete Category"
-                  >
-                    ×
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-
-          {/* NEW - place for uncategorized links */}
-
-          {allLinks.filter((link) => link.category_id === null).length > 0 && (
-            <div
-              className={`${styles.categoryItem} ${
-                selectedCategory === "uncategorized" ? styles.active : ""
-              }`}
-              onClick={() => setSelectedCategory("uncategorized")}
-            >
-              <span styles={{ color: "#999" }}>● Uncategorized</span>
-              <span className={styles.count}>
-                {allLinks.filter((link) => link.category_id === null).length}
-              </span>
-            </div>
-          )}
-
-          {/* Show message if no categories */}
-          {categories.length === 0 && (
-            <p className={styles.emptyMessage}>
-              No categories yet. Create one!
-            </p>
-          )}
-        </aside>
+        <SideBar
+          setIsCategoryModalOpen={setIsCategoryModalOpen}
+          setSelectedCategory={setSelectedCategory}
+          selectedCategory={selectedCategory}
+          categories={categories}
+          allLinks={allLinks}
+          handleDeleteCategory={handleDeleteCategory}
+        />
 
         {/* MAIN CONTENT */}
         <main className={styles.main}>

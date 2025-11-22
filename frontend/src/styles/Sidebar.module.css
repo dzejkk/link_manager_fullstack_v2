@@ -1,0 +1,108 @@
+.sidebar {
+  background: var(--background);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 24px;
+  color: var(--card-foreground);
+  line-height: 1.4;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.sidebarHeader h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  height: 2rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--foreground);
+  font-family: var(--font-serif);
+}
+
+.addBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.addBtn:hover {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.categoryItem {
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+  font-weight: 400;
+  font-size: 1.25rem;
+}
+
+.categoryItem:hover {
+  background-color: var(--accent);
+}
+
+.categoryItem.active {
+  background-color: var(--accent);
+  font-weight: 600;
+}
+
+.categoryActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.count {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: var(--destructive);
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: var(--destructive);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.deleteBtn:hover {
+  color: #c0392b;
+}
+
+.emptyMessage {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  margin-top: 20px;
+}

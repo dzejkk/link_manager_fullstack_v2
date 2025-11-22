@@ -12,14 +12,13 @@ export default function LinkForm({ onClose, editingLink }) {
   );
   const [categoryId, setCategoryId] = useState(editingLink?.category_id || "");
 
+  //TANSTACK QUERY
   //FETCH for dropdown
 
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: categoriesAPI.getAll,
   });
-
-  //TANSTACK QUERY
 
   const queryClient = useQueryClient();
 
@@ -51,6 +50,7 @@ export default function LinkForm({ onClose, editingLink }) {
   // ===========================================
   // FORM HANDLERS
   // ===========================================
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
