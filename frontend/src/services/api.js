@@ -135,3 +135,5 @@ export const linksAPI = {
 
 // Export the axios instance too, in case you need it
 export default api;
+
+// most of API calss are async function so that they are promises in Fact, keep that shit in mind

@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { categoriesAPI } from "../services/api";
 import styles from "../styles/CategoryForm.module.css";
 import ColorPicker from "./ColorPicker";
+import { useCategories } from "../hooks/useCategories";
 
 const palette = [
   "#e3dacc", // bezova
@@ -19,37 +18,23 @@ function CategoryForm({ onClose }) {
   const [name, setName] = useState("");
   const [color, setColor] = useState("#3b82f6");
 
-  // REACT QUERY SETUP
-  const queryClient = useQueryClient();
-
-  const createCategoryMutation = useMutation({
-    mutationFn: (categoryData) => categoriesAPI.create(categoryData),
-
-    onSuccess: () => {
-      // 1. Invalidate categories query - tells React Query to refetch
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-
-      setName("");
-      setColor("#3b82f6");
-      onClose();
-    },
-
-    onError: (error) => {
-      console.error("Failed to create category:", error);
-    },
-  });
+  // Using custom hook
+  const { createCategory, isCreating, createCategoryMutation } =
+    useCategories();
 
   // FORM HANDLERS
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!name.trim()) {
       alert("Please enter a category name");
       return;
     }
 
     // Trigger the mutation ({ argument for mutationFn})
-    createCategoryMutation.mutate({ name, color });
+    createCategory({ name, color });
+    setName("");
+    setColor("#3b82f6");
+    onClose();
   };
 
   return (
@@ -66,7 +51,7 @@ function CategoryForm({ onClose }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. Work, Personal, Hobbies"
-            disabled={createCategoryMutation.isPending}
+            disabled={isCreating}
             autoFocus
           />
         </div>
@@ -92,18 +77,16 @@ function CategoryForm({ onClose }) {
             type="button"
             onClick={onClose}
             className={styles.cancelButton}
-            disabled={createCategoryMutation.isPending}
+            disabled={isCreating}
           >
             Cancel
           </button>
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={createCategoryMutation.isPending}
+            disabled={isCreating}
           >
-            {createCategoryMutation.isPending
-              ? "Creating..."
-              : "Create Category"}
+            {isCreating ? "Creating..." : "Create Category"}
           </button>
         </div>
       </form>

@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { linksAPI, categoriesAPI } from "../services/api";
 import styles from "../styles/DashBoard.module.css";
 import CategoryForm from "../components/CategoryForm";
 import LinkForm from "../components/LinkForm";
@@ -9,8 +7,10 @@ import LinkCard from "../components/LinkCard";
 import CategoryContainer from "../components/CategoryContainer";
 import Navbar from "../components/Navbar";
 import SideBar from "../components/Sidebar";
+import { useCategories } from "../hooks/useCategories";
+import { useLinks } from "../hooks/useLinks";
 
-function DashBoard({ onLogout }) {
+export default function DashBoard({ onLogout }) {
   // STATE
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
@@ -19,58 +19,22 @@ function DashBoard({ onLogout }) {
 
   const user = JSON.parse(localStorage.getItem("user") || {});
 
-  // TANSTACK QUERY
-
-  const queryClient = useQueryClient();
-
-  const {
-    data: categories = [],
-    isLoading: categoriesLoading,
-    error: categoriesError,
-  } = useQuery({
-    queryKey: ["categories"], // Unique key to identify this query
-    queryFn: categoriesAPI.getAll,
-  });
-
-  const {
-    data: allLinks = [],
-    isLoading: linksLoading,
-    error: linksError,
-  } = useQuery({
-    queryKey: ["links"],
-    queryFn: () => linksAPI.getAll(),
-  });
-
-  // changing data - Mutations //
-
-  const deleteLinkMutation = useMutation({
-    mutationFn: (linkId) => linksAPI.delete(linkId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["links"] });
-    },
-  });
-
-  const deleteCategoryMutation = useMutation({
-    mutationFn: (categoryId) => categoriesAPI.delete(categoryId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-      queryClient.invalidateQueries({ queryKey: ["links"] });
-
-      setSelectedCategory(null);
-    },
-  });
+  // TANSTACK QUERY = custom hooks
+  const { categories, categoriesLoading, deleteCategory } = useCategories();
+  const { allLinks, linksLoading, linksError, deleteLink } = useLinks();
 
   /// HANDLERS ///
 
   const handleDeleteLink = (linkId) => {
     if (window.confirm("Are you sure to delete this link ?")) {
-      deleteLinkMutation.mutate(linkId);
+      deleteLink(linkId);
     }
   };
 
   const handleDeleteCategory = (categoriesId) => {
     if (window.confirm("Delete this category, links will be not deleted")) {
-      deleteCategoryMutation.mutate(categoriesId);
+      deleteCategory(categoriesId);
+      setSelectedCategory(null);
     }
   };
 
@@ -85,7 +49,6 @@ function DashBoard({ onLogout }) {
   };
 
   // Important fo showing correct number of links
-
   const displayedLinks =
     selectedCategory === "uncategorized"
       ? allLinks.filter((link) => link.category_id === null)
@@ -94,7 +57,6 @@ function DashBoard({ onLogout }) {
       : allLinks;
 
   // NEW Group links view - different layout for all links view
-
   const groupedLinks =
     selectedCategory === null
       ? allLinks.reduce((groups, link) => {
@@ -118,22 +80,19 @@ function DashBoard({ onLogout }) {
   }
 
   // Show error message if something went wrong
-  if (categoriesError || linksError) {
+  if (categoriesLoading || linksError) {
     return (
       <div className={styles.error}>
         <h2>Oops! Something went wrong</h2>
-        <p>{categoriesError?.message || linksError?.message}</p>
+        <p>{categoriesLoading?.message || linksError?.message}</p>
       </div>
     );
   }
 
   return (
     <div className={styles.dashboard}>
-      {/* NAVBAR */}
       <Navbar onLogout={onLogout} user={user} />
-
       <div className={styles.container}>
-        {/* SIDEBAR */}
         <SideBar
           setIsCategoryModalOpen={setIsCategoryModalOpen}
           setSelectedCategory={setSelectedCategory}
@@ -142,7 +101,6 @@ function DashBoard({ onLogout }) {
           allLinks={allLinks}
           handleDeleteCategory={handleDeleteCategory}
         />
-
         {/* MAIN CONTENT */}
         <main className={styles.main}>
           <div className={styles.mainHeader}>
@@ -227,5 +185,3 @@ function DashBoard({ onLogout }) {
     </div>
   );
 }
-
-export default DashBoard;

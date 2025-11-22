@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { categoriesAPI, linksAPI } from "../services/api";
 import styles from "../styles/LinkForm.module.css";
+import { useLinks } from "../hooks/useLinks";
+import { useCategories } from "../hooks/useCategories";
 
 export default function LinkForm({ onClose, editingLink }) {
   // STATE
@@ -12,40 +12,9 @@ export default function LinkForm({ onClose, editingLink }) {
   );
   const [categoryId, setCategoryId] = useState(editingLink?.category_id || "");
 
-  //TANSTACK QUERY
-  //FETCH for dropdown
-
-  const { data: categories = [] } = useQuery({
-    queryKey: ["categories"],
-    queryFn: categoriesAPI.getAll,
-  });
-
-  const queryClient = useQueryClient();
-
-  //ONE MUTATION HADNLE UPDATE ALSO CREATE
-
-  const saveLinkMutation = useMutation({
-    mutationFn: (linkData) => {
-      if (editingLink) {
-        return linksAPI.update({ id: editingLink.id, ...linkData });
-      }
-      return linksAPI.create(linkData);
-    },
-
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["links"] });
-
-      // reset form
-      setTitle("");
-      setUrl("");
-      setDescription("");
-      setCategoryId("");
-
-      //close
-
-      onClose();
-    },
-  });
+  //TANSTACK QUERY - check hook folder
+  const { categories } = useCategories();
+  const { saveLink, isSaving } = useLinks();
 
   // ===========================================
   // FORM HANDLERS
@@ -53,18 +22,15 @@ export default function LinkForm({ onClose, editingLink }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     // Validation
     if (!title.trim()) {
       alert("Please enter a title");
       return;
     }
-
     if (!url.trim()) {
       alert("Please enter a URL");
       return;
     }
-
     // Basic URL validation
     try {
       new URL(url);
@@ -78,11 +44,26 @@ export default function LinkForm({ onClose, editingLink }) {
       title,
       url,
       description,
-      category_id: categoryId && categoryId !== "" ? categoryId : null, // Convert empty string to null
+      category_id: categoryId && categoryId !== "" ? categoryId : null, // Convert empty string to null for postgre
     };
 
     // Trigger the mutation
-    saveLinkMutation.mutate(linkData);
+    saveLink(
+      {
+        isEditing: !!editingLink,
+        linkId: editingLink?.id,
+        linkData: linkData,
+      },
+      {
+        onSuccess: () => {
+          setTitle("");
+          setUrl("");
+          setDescription("");
+          setCategoryId("");
+          onClose();
+        },
+      }
+    );
   };
 
   const isEditMode = !!editingLink;
@@ -101,7 +82,7 @@ export default function LinkForm({ onClose, editingLink }) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Google, GitHub, YouTube"
-            disabled={saveLinkMutation.isPending}
+            disabled={isSaving.isPending}
             autoFocus
           />
         </div>
@@ -115,7 +96,7 @@ export default function LinkForm({ onClose, editingLink }) {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://example.com"
-            disabled={saveLinkMutation.isPending}
+            disabled={isSaving.isPending}
           />
         </div>
 
@@ -128,7 +109,7 @@ export default function LinkForm({ onClose, editingLink }) {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="A short description of this link..."
             rows={3}
-            disabled={saveLinkMutation.isPending}
+            disabled={isSaving.isPending}
           />
         </div>
 
@@ -139,7 +120,7 @@ export default function LinkForm({ onClose, editingLink }) {
             id="linkCategory"
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
-            disabled={saveLinkMutation.isPending}
+            disabled={isSaving.isPending}
             className={styles.select}
           >
             <option value="">No Category</option>
@@ -152,9 +133,9 @@ export default function LinkForm({ onClose, editingLink }) {
         </div>
 
         {/* Show error if save fails */}
-        {saveLinkMutation.isError && (
+        {isSaving.isError && (
           <div className={styles.error}>
-            {saveLinkMutation.error.response?.data?.error ||
+            {isSaving.error.response?.data?.error ||
               "Failed to save link. Please try again."}
           </div>
         )}
@@ -165,16 +146,16 @@ export default function LinkForm({ onClose, editingLink }) {
             type="button"
             onClick={onClose}
             className={styles.cancelButton}
-            disabled={saveLinkMutation.isPending}
+            disabled={isSaving.isPending}
           >
             Cancel
           </button>
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={saveLinkMutation.isPending}
+            disabled={isSaving.isPending}
           >
-            {saveLinkMutation.isPending
+            {isSaving.isPending
               ? "Saving..."
               : isEditMode
               ? "Update Link"
