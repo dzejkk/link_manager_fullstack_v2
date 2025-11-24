@@ -4,8 +4,11 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xs);
-  padding: 1.5rem;
+  padding-block: 1rem;
+  padding-inline: 1.5rem;
   transition: all 0.3s;
+
+  animation: fade-in 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .linkCard:hover {
@@ -80,7 +83,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 12px;
+  padding-top: 6px;
   border-top: 1px solid #e0e0e0;
   color: var(--muted-foreground);
 }
@@ -115,4 +118,15 @@
   background-color: var(--background);
   padding: 0.25rem;
   margin-inline-end: 0.5rem;
+}
+
+/* animation */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

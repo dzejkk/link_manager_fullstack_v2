@@ -105,6 +105,10 @@
   --shadow-2xl: 0 1px 3px 0px oklch(0 0 0 / 0.25);
 }
 
+html {
+  scrollbar-gutter: stable; /* to prevetn layout shift*/
+}
+
 body {
   font-family: var(--font-sans);
   min-height: 100vh;
@@ -114,7 +118,8 @@ body {
   line-height: 1.5rem;
 }
 
-p {
+p,
+h3 {
   margin: 0;
   padding: 0;
 }

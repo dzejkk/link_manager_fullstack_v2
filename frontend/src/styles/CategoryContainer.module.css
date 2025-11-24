@@ -1,4 +1,5 @@
 .categoryGroup {
+  position: relative;
   background: var(--popover);
   min-height: 10rem;
   border-radius: 12px;
@@ -7,6 +8,7 @@
   margin-bottom: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease-in-out;
+  animation: fade-in 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .categoryGroup:hover {
@@ -27,7 +29,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  max-height: 160px; /* You need to set a max-height for wrapping to work */
+  max-height: 20rem; /* You need to set a max-height for wrapping to work */
 
   column-gap: 1rem;
   row-gap: 0.25rem;
@@ -52,4 +54,39 @@
 
 .compactLink:hover {
   color: var(--ring);
+}
+
+.categoryBtnOpenMultipleLinks {
+  position: absolute;
+  right: 16px;
+  top: 10px;
+  padding: 0.25rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.25rem;
+
+  background-color: var(--destructive);
+  color: var(--sidebar-primary-foreground);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 400;
+  transition: all ease-in-out 0.3s;
+  font-family: var(--font-mono);
+}
+
+.categoryBtnOpenMultipleLinks:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

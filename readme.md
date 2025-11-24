@@ -21,6 +21,7 @@ try it and let me know which feature you want in the future updates
 - [x] check for improvements with AI, expecialy in dashboard component
 - [x] Uncategorized links section (DONE!)
 - [x] Custom hooks implemented
+- [x] multiple links open at the same time
 - [] Search bar to filter links
 - [] Edit categories (change name/color)
 - [] Dark mode toggle

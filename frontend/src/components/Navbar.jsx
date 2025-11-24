@@ -1,4 +1,6 @@
 import { LogOut } from "lucide-react";
+import logo from "../assets/Link_manager_logo.png";
+
 import styles from "../styles/Navbar.module.css";
 
 function Navbar({ onLogout, user }) {
@@ -7,6 +9,7 @@ function Navbar({ onLogout, user }) {
       <div className={styles.navWrapper}>
         <div className={styles.navLeft}>
           <h1>Link Manager</h1>
+          <img src={logo} alt="logo" className={styles.logo} />
         </div>
         <div className={styles.navRight}>
           <span className={styles.username}>Hello, {user.username}!</span>

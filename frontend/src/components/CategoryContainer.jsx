@@ -1,6 +1,7 @@
 // components/CategoryContainer.jsx
 import styles from "../styles/CategoryContainer.module.css";
-import { SquareArrowOutUpRight } from "lucide-react";
+import { SquareArrowOutUpRight, GalleryHorizontalEnd } from "lucide-react";
+import { openAllLinks } from "../utils/openAllLinks";
 
 export default function CategoryContainer({ category, links }) {
   return (
@@ -31,6 +32,13 @@ export default function CategoryContainer({ category, links }) {
           </li>
         ))}
       </ul>
+      <button
+        className={styles.categoryBtnOpenMultipleLinks}
+        onClick={() => openAllLinks(links)}
+      >
+        open all
+        <GalleryHorizontalEnd size={14} />
+      </button>
     </div>
   );
 }
