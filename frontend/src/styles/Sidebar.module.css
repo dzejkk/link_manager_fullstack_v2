@@ -12,6 +12,7 @@
         height: 4em;
         overflow-y: scroll;
         background: var(--popover);
+        display: none;
     }
 }
 
@@ -122,4 +123,86 @@
     color: #999;
     font-size: 14px;
     margin-top: 20px;
+}
+
+.mobileView {
+    display: none;
+
+    @media (width < 698px) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+        padding-inline: 2rem;
+        background-color: var(--popover);
+        padding-block: 0.85rem;
+        border-radius: var(--radius);
+    }
+
+    select {
+        padding-inline: 1rem;
+        padding-block: 0.5rem; /* increased for better touch target */
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        width: 85%;
+        font-weight: 600;
+        font-size: 1rem;
+        background-color: var(--background);
+        color: var(--foreground);
+        cursor: pointer;
+
+        /* Custom arrow */
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.5rem center;
+        background-size: 1.25rem;
+        padding-right: 2.5rem; /* space for arrow */
+    }
+
+    select:hover {
+        background-color: var(--muted);
+        border-color: var(--ring);
+    }
+
+    select:focus {
+        outline: 2px solid var(--ring);
+        outline-offset: -1px;
+        background-color: var(--background);
+    }
+
+    /* Limited option styling - browser dependent */
+    option {
+        padding: 0.5rem;
+        background-color: var(--background);
+        color: var(--foreground);
+    }
+
+    option:checked {
+        background-color: var(--accent);
+        color: var(--accent-foreground);
+    }
+}
+
+.mobileAddBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5rem;
+    padding: 8px 8px;
+    background-color: var(--destructive);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all ease-in-out 0.3s;
+}
+
+.mobileAddBtn:hover {
+    background-color: color-mix(
+        in oklab,
+        var(--destructive) 75%,
+        var(--popover) 25%
+    );
 }

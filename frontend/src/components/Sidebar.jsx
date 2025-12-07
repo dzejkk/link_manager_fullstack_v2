@@ -39,7 +39,7 @@ const SideBar = ({
         {categories.map((category) => {
           // Count links in this category
           const linkCount = allLinks.filter(
-            (link) => link.category_id === category.id
+            (link) => link.category_id === category.id,
           ).length;
 
           return (
@@ -94,6 +94,46 @@ const SideBar = ({
           <p className={styles.emptyMessage}>No categories yet. Create one!</p>
         )}
       </aside>
+
+      {/* Mobile view*/}
+
+      <div className={styles.mobileView}>
+        <select
+          value={selectedCategory || "all"}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === "all") setSelectedCategory(null);
+            else if (value === "uncategorized")
+              setSelectedCategory("uncategorized");
+            else setSelectedCategory(value);
+          }}
+        >
+          <option value="all">All Links ({allLinks.length})</option>
+          {categories.map((category) => {
+            const linkCount = allLinks.filter(
+              (link) => link.category_id === category.id,
+            ).length;
+            return (
+              <option key={category.id} value={category.id}>
+                {category.name} ({linkCount})
+              </option>
+            );
+          })}
+          {allLinks.filter((link) => link.category_id === null).length > 0 && (
+            <option value="uncategorized">
+              Uncategorized (
+              {allLinks.filter((link) => link.category_id === null).length})
+            </option>
+          )}
+        </select>
+        <button
+          onClick={() => setIsCategoryModalOpen(true)}
+          className={styles.mobileAddBtn}
+          title="Add Category"
+        >
+          <Plus size={16} color="white" />
+        </button>
+      </div>
     </div>
   );
 };
