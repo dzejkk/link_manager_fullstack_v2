@@ -39,7 +39,7 @@ const SideBar = ({
         {categories.map((category) => {
           // Count links in this category
           const linkCount = allLinks.filter(
-            (link) => link.category_id === category.id,
+            (link) => link.category_id === category.id
           ).length;
 
           return (
@@ -111,7 +111,7 @@ const SideBar = ({
           <option value="all">All Links ({allLinks.length})</option>
           {categories.map((category) => {
             const linkCount = allLinks.filter(
-              (link) => link.category_id === category.id,
+              (link) => link.category_id === category.id
             ).length;
             return (
               <option key={category.id} value={category.id}>

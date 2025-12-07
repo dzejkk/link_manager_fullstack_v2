@@ -54,7 +54,7 @@ const LinkCard = ({ link, onEdit, onDelete }) => {
               paddingInlineEnd: "0.25rem",
             }}
           />
-          {link.url.slice(0, 30)}
+          {link.url.slice(0, 29)}
         </a>
 
         <div className={styles.linkFooter}>

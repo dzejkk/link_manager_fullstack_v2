@@ -36,6 +36,10 @@
   list-style: none;
   margin: 0;
   padding: 0;
+
+  @media (width < 698px) {
+    flex-wrap: nowrap;
+  }
 }
 .compactItem {
   padding-bottom: 0.1rem;

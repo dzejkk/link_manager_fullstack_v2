@@ -27,9 +27,10 @@ try it and let me know which feature you want in the future updates
 - [] Search bar to filter links
 - [] Edit categories (change name/color)
 - [] Dark mode toggle
-- [] Better mobile responsiveness
+- [x] Better mobile responsiveness
 - [] Drag and drop to reorder
 - [] Tags for links
 - [] Import/export links
 - [] Link favicons/previews
 - [] User profile/settings page
+- [] forget password options
