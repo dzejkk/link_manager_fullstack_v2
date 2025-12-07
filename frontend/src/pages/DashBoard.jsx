@@ -53,8 +53,8 @@ export default function DashBoard({ onLogout }) {
     selectedCategory === "uncategorized"
       ? allLinks.filter((link) => link.category_id === null)
       : selectedCategory
-      ? allLinks.filter((link) => link.category_id === selectedCategory)
-      : allLinks;
+        ? allLinks.filter((link) => link.category_id === selectedCategory)
+        : allLinks;
 
   // NEW Group links view - different layout for all links view
   const groupedLinks =
@@ -128,7 +128,7 @@ export default function DashBoard({ onLogout }) {
               // --- GROUPED LINKS VIEW ---
               Object.entries(groupedLinks).map(([categoryId, links]) => {
                 const category = categories.find(
-                  (cat) => cat.id === categoryId
+                  (cat) => cat.id === categoryId,
                 ) || {
                   name: "Uncategorized",
                   color: "#ccc",

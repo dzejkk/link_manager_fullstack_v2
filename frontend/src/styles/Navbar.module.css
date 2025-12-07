@@ -1,70 +1,87 @@
 .navbar {
-  background: var(--background);
-  padding: 16px 32px;
-  box-shadow: var(--shadow-md);
-  align-items: center;
+    background: var(--background);
+    padding: 16px 32px;
+    box-shadow: var(--shadow-md);
+    align-items: center;
+
+    @media (width < 698px) {
+        width: 100%;
+    }
 }
 
 .navWrapper {
-  background: var(--background);
-  max-width: 1600px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    background: var(--background);
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .navLeft {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .navLeft h1 {
-  margin: 0;
-  font-size: 2rem;
-  color: var(--foreground);
-  font-family: var(--font-serif);
-  font-weight: 400;
+    margin: 0;
+    font-size: 2rem;
+    color: var(--foreground);
+    font-family: var(--font-serif);
+    font-weight: 400;
+
+    @media (width < 698px) {
+        font-size: 1.25rem;
+    }
 }
 
 .navRight {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .username {
-  color: var(--secondary-foreground);
-  font-size: 0.85rem;
-  font-weight: 600;
+    color: var(--secondary-foreground);
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
 .logoutBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 0.5rem;
-  padding: 8px 16px;
-  background-color: var(--destructive);
-  color: var(--sidebar-primary-foreground);
-  border: none;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 600;
-  transition: all ease-in-out 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5rem;
+    padding: 8px 16px;
+    background-color: var(--destructive);
+    color: var(--sidebar-primary-foreground);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all ease-in-out 0.3s;
+
+    @media (width < 698px) {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
 }
 
 .logoutBtn:hover {
-  background-color: color-mix(
-    in oklab,
-    var(--destructive) 85%,
-    var(--popover) 15%
-  );
+    background-color: color-mix(
+        in oklab,
+        var(--destructive) 75%,
+        var(--popover) 25%
+    );
 }
 
 .logo {
-  width: 48px;
+    width: 48px;
+
+    @media (width < 698px) {
+        width: 24px;
+    }
 }
