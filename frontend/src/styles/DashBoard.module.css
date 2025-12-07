@@ -153,6 +153,10 @@
     margin: 0;
     font-size: 24px;
     color: var(--card-foreground);
+
+    @media (width < 698px) {
+        font-size: 1.25rem;
+    }
 }
 
 .createBtn {
@@ -169,6 +173,11 @@
     font-size: 0.85rem;
     font-weight: 600;
     transition: all 0.2s ease-in-out;
+
+    @media (width < 698px) {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+    }
 }
 
 .createBtn > p {
@@ -186,6 +195,13 @@
     grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
     gap: 20px;
     align-items: start;
+
+    @media (width < 698px) {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+        gap: 10px;
+        align-items: start;
+    }
 }
 
 .emptyState {

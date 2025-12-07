@@ -3,10 +3,6 @@
     padding: 16px 32px;
     box-shadow: var(--shadow-md);
     align-items: center;
-
-    @media (width < 698px) {
-        width: 100%;
-    }
 }
 
 .navWrapper {

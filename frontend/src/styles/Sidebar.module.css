@@ -10,9 +10,8 @@
 
     @media (width < 698px) {
         height: 4em;
-        overflow-y: auto;
+        overflow-y: scroll;
         background: var(--popover);
-        max-width: 22em;
     }
 }
 
