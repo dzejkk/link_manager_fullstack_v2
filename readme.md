@@ -10,6 +10,10 @@ try it and let me know which feature you want in the future updates
 
 ## Stack
 
+ - FrontEnd => Vite, React, tanStackQuery, Axios, css.modules
+ - BackEnd => PostgreSQL, Express.js, bcrypt, jsonwebtoken
+
+
 ### Chalanges
 
 ### Deployement
@@ -31,6 +35,6 @@ try it and let me know which feature you want in the future updates
 - [] Drag and drop to reorder
 - [] Tags for links
 - [] Import/export links
-- [] Link favicons/previews
+- [x] Link favicons/previews
 - [] User profile/settings page
 - [] forget password options

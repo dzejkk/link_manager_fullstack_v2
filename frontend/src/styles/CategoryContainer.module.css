@@ -39,6 +39,7 @@
 
   @media (width < 698px) {
     flex-wrap: nowrap;
+    max-height: fit-content;
   }
 }
 .compactItem {

@@ -119,9 +119,12 @@ export default function DashBoard({ onLogout }) {
           <div className={styles.linksGrid}>
             {allLinks.length === 0 ? (
               <div className={styles.emptyState}>
-                <p>📭 No links yet</p>
-                <button onClick={handleCreateLink} className={styles.createBtn}>
+                <button
+                  onClick={handleCreateLink}
+                  className={styles.createBtnEmptyState}
+                >
                   Create your first link
+                  <Plus />
                 </button>
               </div>
             ) : selectedCategory === null ? (
