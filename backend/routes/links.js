@@ -17,12 +17,33 @@ router.get("/", authenticateToken, async (req, res) => {
       params.push(category_id);
     }
 
-    query += " ORDER BY created_at DESC";
+    query += " ORDER BY display_order ASC, created_at DESC";
 
     const result = await pool.query(query, params);
     res.json(result.rows);
   } catch (error) {
     console.error("Get links error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// update link order, order matters !!!! this must come right
+// after  "/" route
+
+router.put("/reorder", authenticateToken, async (req, res) => {
+  try {
+    const { links } = req.body;
+
+    for (const link of links) {
+      await pool.query(
+        "UPDATE links SET display_order = $1 WHERE id = $2 AND user_id = $3",
+        [link.display_order, link.id, req.user.userId]
+      );
+    }
+
+    res.json({ message: "Links reordered succesfully" });
+  } catch (error) {
+    console.error("Reorder links error:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
