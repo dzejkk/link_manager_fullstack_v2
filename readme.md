@@ -1,9 +1,9 @@
 # Link Manager app ver_1
 
 Make order with your links, dont use shitty browser features, use this instead
-u can make custom categories , custom colors codes for categories, and also you can and remarks to your links, also this app have auth so your links are nice and private on PCs where are more users
-so that you dont forget why you added them in frist place, and laso for faster navigation
+u can make custom categories , custom colors codes for categories, and also you can add remarks to your links, also this app have auth so your links are nice and private on PCs where are more users.
 try it and let me know which feature you want in the future updates
+at: kontrajakub2gmail.com
 
 [LinkManager](https://frontend-production-14d6.up.railway.app/)
 

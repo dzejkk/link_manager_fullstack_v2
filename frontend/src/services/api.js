@@ -1,7 +1,5 @@
 import axios from "axios";
 
-// GEt api url from env
-
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 // Axios instance
@@ -60,19 +58,16 @@ api.interceptors.response.use(
 //////////////////// user ///////////////////////////
 
 export const authAPI = {
-  // Register a new user
   register: async (userData) => {
     const response = await api.post("/auth/register", userData);
     return response.data;
   },
 
-  // Login user
   login: async (credentials) => {
     const response = await api.post("/auth/login", credentials);
     return response.data;
   },
 
-  // Logout (just clear local storage)
   logout: () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");

@@ -84,27 +84,6 @@
   );
 }
 
-.createBtnEmptyState {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 0.5rem;
-  padding: 8px 16px;
-  background-color: var(--destructive);
-  color: var(--sidebar-primary-foreground);
-  border: none;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 600;
-  transition: all ease-in-out 0.3s;
-
-  @media (width < 698px) {
-    padding: 4px 8px;
-    font-size: 0.75rem;
-  }
-}
-
 .logo {
   width: 38px;
   padding: 0.25rem;
