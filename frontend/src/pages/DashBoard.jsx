@@ -9,6 +9,26 @@ import Navbar from "../components/Navbar";
 import SideBar from "../components/Sidebar";
 import { useCategories } from "../hooks/useCategories";
 import { useLinks } from "../hooks/useLinks";
+import { DraggableLinkCard } from "../components/DraggableLinkCard";
+import { getDomain } from "../utils/getDomain";
+
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  defaultKeyboardCoordinateGetter,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 export default function DashBoard({ onLogout }) {
   // STATE
@@ -21,7 +41,17 @@ export default function DashBoard({ onLogout }) {
 
   // TANSTACK QUERY = custom hooks
   const { categories, categoriesLoading, deleteCategory } = useCategories();
-  const { allLinks, linksLoading, linksError, deleteLink } = useLinks();
+  const { allLinks, linksLoading, linksError, deleteLink, reorderLinks } =
+    useLinks();
+
+  //Drag and drop
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   /// HANDLERS ///
 
@@ -46,6 +76,30 @@ export default function DashBoard({ onLogout }) {
   const handleCreateLink = () => {
     setEditingLink(null); // Clear editing (means we're creating new)
     setIsLinkModalOpen(true);
+  };
+
+  // drag and drop
+
+  // Add this function inside Dashboard component
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (!over || active.id === over.id) {
+      return; // Nothing changed
+    }
+
+    const oldIndex = displayedLinks.findIndex((link) => link.id === active.id);
+    const newIndex = displayedLinks.findIndex((link) => link.id === over.id);
+
+    const reorderedLinks = arrayMove(displayedLinks, oldIndex, newIndex);
+
+    // Create the payload for backend
+    const linksOrder = reorderedLinks.map((link, index) => ({
+      id: link.id,
+      display_order: index,
+    }));
+
+    reorderLinks(linksOrder);
   };
 
   // Important fo showing correct number of links
@@ -147,14 +201,26 @@ export default function DashBoard({ onLogout }) {
               })
             ) : (
               // --- SINGLE CATEGORY LINKS VIEW ---
-              displayedLinks.map((link) => (
-                <LinkCard
-                  key={link.id}
-                  link={link}
-                  onDelete={handleDeleteLink}
-                  onEdit={handleEditLink}
-                />
-              ))
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <SortableContext
+                  items={displayedLinks.map((link) => link.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {displayedLinks.map((link) => (
+                    <DraggableLinkCard
+                      key={link.id}
+                      link={link}
+                      onEdit={handleEditLink}
+                      onDelete={handleDeleteLink}
+                      getDomain={getDomain}
+                    />
+                  ))}
+                </SortableContext>
+              </DndContext>
             )}
           </div>
         </main>

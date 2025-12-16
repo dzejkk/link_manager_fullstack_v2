@@ -126,6 +126,11 @@ export const linksAPI = {
     const response = await api.delete(`/links/${id}`);
     return response.data;
   },
+
+  reorder: async (linksOrder) => {
+    const response = await api.put("/links/reorder", { links: linksOrder });
+    return response.data;
+  },
 };
 
 // Export the axios instance too, in case you need it

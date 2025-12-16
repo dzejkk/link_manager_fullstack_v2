@@ -35,6 +35,13 @@ export function useLinks() {
     },
   });
 
+  const reorderLinksMutation = useMutation({
+    mutationFn: linksAPI.reorder,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
+
   return {
     allLinks,
     linksLoading,
@@ -47,5 +54,8 @@ export function useLinks() {
     // states
     isSaving: saveLinkMutation.isPending,
     isDeleting: deleteLinkMutation.isPending,
+
+    //reorder
+    reorderLinks: reorderLinksMutation.mutate,
   };
 }
