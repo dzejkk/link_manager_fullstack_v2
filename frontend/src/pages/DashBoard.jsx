@@ -17,6 +17,8 @@ import {
   closestCenter,
   KeyboardSensor,
   PointerSensor,
+  closestCorners,
+  pointerWithin,
   useSensor,
   useSensors,
   defaultKeyboardCoordinateGetter,
@@ -26,7 +28,7 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
-  verticalListSortingStrategy,
+  rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -203,12 +205,12 @@ export default function DashBoard({ onLogout }) {
               // --- SINGLE CATEGORY LINKS VIEW ---
               <DndContext
                 sensors={sensors}
-                collisionDetection={closestCenter}
+                collisionDetection={closestCorners}
                 onDragEnd={handleDragEnd}
               >
                 <SortableContext
                   items={displayedLinks.map((link) => link.id)}
-                  strategy={verticalListSortingStrategy}
+                  strategy={rectSortingStrategy}
                 >
                   {displayedLinks.map((link) => (
                     <DraggableLinkCard
