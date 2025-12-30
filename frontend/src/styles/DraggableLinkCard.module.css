@@ -47,7 +47,7 @@
 .editBtn {
   background: none;
   border: none;
-  color: var(--destructive);
+  color: var(--muted-foreground);
   font-size: 20px;
   cursor: pointer;
   padding: 0;
@@ -61,6 +61,7 @@
 
 .editBtn:hover {
   color: var(--primary);
+  animation: shake 0.5s ease-in-out;
 }
 
 .description {
@@ -109,7 +110,7 @@
 .deleteBtn {
   background: none;
   border: none;
-  color: var(--destructive);
+  color: var(--muted-foreground);
   font-size: 20px;
   cursor: pointer;
   padding: 0;
@@ -123,6 +124,8 @@
 
 .deleteBtn:hover {
   color: #c0392b;
+  /* transform: rotate(10deg); */
+  animation: shake 0.4s ease-in-out;
 }
 
 .favicon {
@@ -149,6 +152,25 @@
   cursor: grab;
 }
 
+.graber > svg:hover {
+  color: var(--ring);
+}
+
 .graber > svg:active {
   cursor: grabbing;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(4deg);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+  75% {
+    transform: rotate(-8deg);
+  }
 }

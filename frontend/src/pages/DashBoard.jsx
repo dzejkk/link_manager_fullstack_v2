@@ -88,7 +88,7 @@ export default function DashBoard({ onLogout }) {
           .sort((a, b) => a.display_order - b.display_order)
       : allLinks.sort((a, b) => a.display_order - b.display_order);
 
-  // drag and drop
+  // DND
   const { reorder, dragItems } = useDragReorder(displayedLinks);
 
   // Also sort within grouped links

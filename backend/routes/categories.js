@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", authenticateToken, async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT * FROM categories WHERE user_id = $1 ORDER BY created_at DESC",
+      "SELECT * FROM categories WHERE user_id = $1 ORDER BY display_order ASC, created_at DESC",
       [req.user.userId]
     );
     res.json(result.rows);
@@ -36,6 +36,30 @@ router.post("/", authenticateToken, async (req, res) => {
   } catch (error) {
     console.error("Create category error:", error);
     res.status(500).json({ error: "Server error" });
+  }
+});
+
+// new for reorder feature
+
+router.put("/reorder", authenticateToken, async (req, res) => {
+  try {
+    const { categories } = req.body;
+
+    // Update each category
+    // console.log("Type:", typeof categories);
+    // console.log("Value:", categories);
+
+    for (const category of categories) {
+      await pool.query(
+        "UPDATE categories SET display_order = $1 WHERE id = $2 AND user_id = $3",
+        [category.display_order, category.id, req.user.userId]
+      );
+    }
+
+    res.json({ message: "Categories reordered successfully" });
+  } catch (error) {
+    console.error("Reored of categories failed", error);
+    res.status(500).json({ error: "server error" });
   }
 });
 

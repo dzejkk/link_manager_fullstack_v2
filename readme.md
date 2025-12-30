@@ -7,21 +7,28 @@ at: kontrajakub2gmail.com
 
 [LinkManager](https://frontend-production-14d6.up.railway.app/)
 
-
 ## Stack
 
- - FrontEnd => Vite, React, tanStackQuery, Axios, css.modules
- - BackEnd => PostgreSQL, Express.js, bcrypt, jsonwebtoken
-
+- FrontEnd => Vite, React, tanStackQuery, Axios, css.modules
+- BackEnd => PostgreSQL, Express.js, bcrypt, jsonwebtoken
 
 ### Chalanges
 
+1.
+
+- used optimistic update for Drag and drop feature to stop bug
+- (cards after drop to new place jumps around)
+- useDragReored hook contian all the logic, finded solution on github
+
+2.
+
 ### Deployement
 
-### Interesting stuff  
+- Railway
 
+### Interesting stuff
 
-** To do ** 
+** To do **
 
 - [x] break main dashboard to smaller components
 - [x] check for improvements with AI, expecialy in dashboard component

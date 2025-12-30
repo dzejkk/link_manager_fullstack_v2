@@ -1,7 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import styles from "../styles/DraggableLinkCard.module.css";
-import { Grip } from "lucide-react";
+import { Grip, Pen, Trash } from "lucide-react";
 
 export function DraggableLinkCard({ link, onEdit, onDelete, getDomain }) {
   const {
@@ -35,7 +35,7 @@ export function DraggableLinkCard({ link, onEdit, onDelete, getDomain }) {
             className={styles.editBtn}
             title="Edit"
           >
-            ✏️
+            <Pen size={18} />
           </button>
           <button
             onClick={(e) => {
@@ -45,7 +45,7 @@ export function DraggableLinkCard({ link, onEdit, onDelete, getDomain }) {
             className={styles.deleteBtn}
             title="Delete"
           >
-            🗑️
+            <Trash size={18} />
           </button>
         </div>
       </div>
@@ -76,7 +76,7 @@ export function DraggableLinkCard({ link, onEdit, onDelete, getDomain }) {
           Added {new Date(link.created_at).toLocaleDateString()}
         </span>
         <div className={styles.graber} {...attributes} {...listeners}>
-          <Grip />
+          <Grip size={18} />
         </div>
       </div>
     </div>
