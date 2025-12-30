@@ -3,7 +3,6 @@ import styles from "../styles/DashBoard.module.css";
 import CategoryForm from "../components/CategoryForm";
 import LinkForm from "../components/LinkForm";
 import { Plus } from "lucide-react";
-import LinkCard from "../components/LinkCard";
 import CategoryContainer from "../components/CategoryContainer";
 import Navbar from "../components/Navbar";
 import SideBar from "../components/Sidebar";
@@ -11,23 +10,20 @@ import { useCategories } from "../hooks/useCategories";
 import { useLinks } from "../hooks/useLinks";
 import { DraggableLinkCard } from "../components/DraggableLinkCard";
 import { getDomain } from "../utils/getDomain";
+import { useDragReorder } from "../hooks/useDragReorder";
 
 import {
   DndContext,
-  closestCenter,
   KeyboardSensor,
   PointerSensor,
   closestCorners,
-  pointerWithin,
   useSensor,
   useSensors,
-  defaultKeyboardCoordinateGetter,
 } from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  useSortable,
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -80,39 +76,22 @@ export default function DashBoard({ onLogout }) {
     setIsLinkModalOpen(true);
   };
 
-  // drag and drop
-
-  // Add this function inside Dashboard component
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-
-    if (!over || active.id === over.id) {
-      return; // Nothing changed
-    }
-
-    const oldIndex = displayedLinks.findIndex((link) => link.id === active.id);
-    const newIndex = displayedLinks.findIndex((link) => link.id === over.id);
-
-    const reorderedLinks = arrayMove(displayedLinks, oldIndex, newIndex);
-
-    // Create the payload for backend
-    const linksOrder = reorderedLinks.map((link, index) => ({
-      id: link.id,
-      display_order: index,
-    }));
-
-    reorderLinks(linksOrder);
-  };
-
   // Important fo showing correct number of links
   const displayedLinks =
     selectedCategory === "uncategorized"
-      ? allLinks.filter((link) => link.category_id === null)
+      ? allLinks
+          .filter((link) => link.category_id === null)
+          .sort((a, b) => a.display_order - b.display_order)
       : selectedCategory
-      ? allLinks.filter((link) => link.category_id === selectedCategory)
-      : allLinks;
+      ? allLinks
+          .filter((link) => link.category_id === selectedCategory)
+          .sort((a, b) => a.display_order - b.display_order)
+      : allLinks.sort((a, b) => a.display_order - b.display_order);
 
-  // NEW Group links view - different layout for all links view
+  // drag and drop
+  const { reorder, dragItems } = useDragReorder(displayedLinks);
+
+  // Also sort within grouped links
   const groupedLinks =
     selectedCategory === null
       ? allLinks.reduce((groups, link) => {
@@ -124,6 +103,15 @@ export default function DashBoard({ onLogout }) {
           return groups;
         }, {})
       : null;
+
+  // Sort each group's links by display_order
+  if (groupedLinks) {
+    Object.keys(groupedLinks).forEach((categoryId) => {
+      groupedLinks[categoryId].sort(
+        (a, b) => a.display_order - b.display_order
+      ); // ← ADD THIS
+    });
+  }
 
   // Show loading spinner while fetching initial data
   if (categoriesLoading || linksLoading) {
@@ -206,13 +194,13 @@ export default function DashBoard({ onLogout }) {
               <DndContext
                 sensors={sensors}
                 collisionDetection={closestCorners}
-                onDragEnd={handleDragEnd}
+                onDragEnd={reorder}
               >
                 <SortableContext
-                  items={displayedLinks.map((link) => link.id)}
+                  items={dragItems.map((link) => link.id)}
                   strategy={rectSortingStrategy}
                 >
-                  {displayedLinks.map((link) => (
+                  {dragItems.map((link) => (
                     <DraggableLinkCard
                       key={link.id}
                       link={link}

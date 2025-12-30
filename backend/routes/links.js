@@ -78,9 +78,26 @@ router.post("/", authenticateToken, async (req, res) => {
       return res.status(400).json({ error: "Title and URL are required" });
     }
 
+    // Get highest order for THIS CATEGORY (or uncategorized)
+    const maxOrderResult = await pool.query(
+      category_id
+        ? "SELECT COALESCE(MAX(display_order), -1) as max_order FROM links WHERE user_id = $1 AND category_id = $2"
+        : "SELECT COALESCE(MAX(display_order), -1) as max_order FROM links WHERE user_id = $1 AND category_id IS NULL",
+      category_id ? [req.user.userId, category_id] : [req.user.userId]
+    );
+
+    const nextOrder = maxOrderResult.rows[0].max_order + 1;
+
     const result = await pool.query(
-      "INSERT INTO links (user_id, category_id, title, url, description) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-      [req.user.userId, category_id || null, title, url, description || null]
+      "INSERT INTO links (user_id, category_id, title, url, description, display_order) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [
+        req.user.userId,
+        category_id || null,
+        title,
+        url,
+        description || null,
+        nextOrder,
+      ]
     );
 
     res.status(201).json(result.rows[0]);
