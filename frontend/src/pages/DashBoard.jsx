@@ -11,7 +11,6 @@ import { useLinks } from "../hooks/useLinks";
 import { DraggableLinkCard } from "../components/DraggableLinkCard";
 import { getDomain } from "../utils/getDomain";
 import { useDragReorder } from "../hooks/useDragReorder";
-
 import {
   DndContext,
   KeyboardSensor,
@@ -19,7 +18,10 @@ import {
   closestCorners,
   useSensor,
   useSensors,
+  MouseSensor,
+  TouchSensor,
 } from "@dnd-kit/core";
+
 import {
   arrayMove,
   SortableContext,
@@ -39,13 +41,18 @@ export default function DashBoard({ onLogout }) {
 
   // TANSTACK QUERY = custom hooks
   const { categories, categoriesLoading, deleteCategory } = useCategories();
-  const { allLinks, linksLoading, linksError, deleteLink, reorderLinks } =
-    useLinks();
+  const { allLinks, linksLoading, linksError, deleteLink } = useLinks();
 
   //Drag and drop
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(MouseSensor),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 100,
+        tolerance: 5,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })

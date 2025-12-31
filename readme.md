@@ -16,8 +16,8 @@ at: kontrajakub2gmail.com
 
 1.
 
-- used optimistic update for Drag and drop feature to stop bug
-- (cards after drop to new place jumps around)
+- used _Optimistic UI update_ for Drag and drop feature to stop bug
+- cards after drop to new place jumps around
 - useDragReored hook contian all the logic, finded solution on github
 
 2.
