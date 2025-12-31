@@ -25,6 +25,14 @@ export function DraggableLinkCard({ link, onEdit, onDelete, getDomain }) {
   return (
     <div ref={setNodeRef} style={style} className={styles.linkCard}>
       <div className={styles.linkHeader}>
+        <img
+          src={`https://www.google.com/s2/favicons?domain=${getDomain(
+            link.url
+          )}&sz=32`}
+          alt="favicon"
+          className={styles.favicon}
+          onError={(e) => (e.target.style.display = "none")}
+        />
         <h3>{link.title}</h3>
         <div className={styles.linkActions}>
           <button
@@ -53,14 +61,6 @@ export function DraggableLinkCard({ link, onEdit, onDelete, getDomain }) {
         <p className={styles.description}>{link.description}</p>
       )}
       <div className={styles.linkUrlContainer}>
-        <img
-          src={`https://www.google.com/s2/favicons?domain=${getDomain(
-            link.url
-          )}&sz=32`}
-          alt="favicon"
-          className={styles.favicon}
-          onError={(e) => (e.target.style.display = "none")}
-        />
         <a
           href={link.url}
           target="_blank"

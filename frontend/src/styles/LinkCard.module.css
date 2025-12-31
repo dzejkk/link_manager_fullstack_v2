@@ -6,8 +6,6 @@
   box-shadow: var(--shadow-xs);
   padding-block: 0.75rem;
   padding-inline: 1.5rem;
-  transition: none;
-  touch-action: manipulation;
 
   animation: fade-in 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
 }

@@ -45,7 +45,11 @@
 .compactItem {
   padding-bottom: 0.1rem;
   border-bottom: 1px solid #eee;
-  max-width: 166px; /*for text not bleeeding out*/
+  max-width: 176px; /*for text not bleeeding out*/
+
+  @media (width < 698px) {
+    max-width: none;
+  }
 }
 
 .compactLink {

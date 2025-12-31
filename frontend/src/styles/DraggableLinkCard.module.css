@@ -9,12 +9,13 @@
   animation: fade-in 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
   /* Don't add transition here - let dnd-kit handle the animation */
   will-change: transform;
+  touch-action: manipulation;
+  transition: border-color 0.2s ease-in;
 }
 
 .linkCard:hover {
   border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
   box-shadow: var(--shadow-xs);
-  transition: border-color 0.2s ease-in;
 }
 
 .linkHeader {
