@@ -22,6 +22,10 @@ at: kontrajakub2gmail.com
 
 2.
 
+- used _Optimistic update_ also for CategoryGroups items for dragging
+- there was one difference, it was need to add sorting to the dragging hook also
+- and used cancel queries to stop jumping card to original position
+
 ### Deployement
 
 - Railway
@@ -39,7 +43,7 @@ at: kontrajakub2gmail.com
 - [] Edit categories (change name/color)
 - [] Dark mode toggle
 - [x] Better mobile responsiveness
-- [] Drag and drop to reorder
+- [x] Drag and drop to reorder
 - [] Tags for links
 - [] Import/export links
 - [x] Link favicons/previews

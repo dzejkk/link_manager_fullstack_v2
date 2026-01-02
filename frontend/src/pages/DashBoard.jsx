@@ -3,7 +3,6 @@ import styles from "../styles/DashBoard.module.css";
 import CategoryForm from "../components/CategoryForm";
 import LinkForm from "../components/LinkForm";
 import { Plus } from "lucide-react";
-import CategoryContainer from "../components/CategoryContainer";
 import Navbar from "../components/Navbar";
 import SideBar from "../components/Sidebar";
 import { useCategories } from "../hooks/useCategories";
@@ -11,10 +10,11 @@ import { useLinks } from "../hooks/useLinks";
 import { DraggableLinkCard } from "../components/DraggableLinkCard";
 import { getDomain } from "../utils/getDomain";
 import { useDragReorder } from "../hooks/useDragReorder";
+import { useDragReorderCategories } from "../hooks/useDragReorderCategories";
+import { DraggableCategoryGroup } from "../components/DraggableCategoryGroup";
 import {
   DndContext,
   KeyboardSensor,
-  PointerSensor,
   closestCorners,
   useSensor,
   useSensors,
@@ -26,8 +26,10 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   rectSortingStrategy,
+  verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { openAllLinks } from "../utils/openAllLinks";
 
 export default function DashBoard({ onLogout }) {
   // STATE
@@ -96,6 +98,8 @@ export default function DashBoard({ onLogout }) {
 
   // DND
   const { reorder, dragItems } = useDragReorder(displayedLinks);
+  const { reorder: reorderCategories, dragItems: sortedCategories } =
+    useDragReorderCategories(categories);
 
   // Also sort within grouped links
   const groupedLinks =
@@ -115,7 +119,7 @@ export default function DashBoard({ onLogout }) {
     Object.keys(groupedLinks).forEach((categoryId) => {
       groupedLinks[categoryId].sort(
         (a, b) => a.display_order - b.display_order
-      ); // ← ADD THIS
+      );
     });
   }
 
@@ -147,7 +151,7 @@ export default function DashBoard({ onLogout }) {
           setIsCategoryModalOpen={setIsCategoryModalOpen}
           setSelectedCategory={setSelectedCategory}
           selectedCategory={selectedCategory}
-          categories={categories}
+          categories={sortedCategories}
           allLinks={allLinks}
           handleDeleteCategory={handleDeleteCategory}
         />
@@ -156,7 +160,7 @@ export default function DashBoard({ onLogout }) {
           <div className={styles.mainHeader}>
             <h2>
               {selectedCategory
-                ? categories.find((c) => c.id === selectedCategory)?.name
+                ? sortedCategories.find((c) => c.id === selectedCategory)?.name
                 : "All Links"}
             </h2>
             <button onClick={handleCreateLink} className={styles.createBtn}>
@@ -178,23 +182,45 @@ export default function DashBoard({ onLogout }) {
                 </button>
               </div>
             ) : selectedCategory === null ? (
-              // --- GROUPED LINKS VIEW ---
-              Object.entries(groupedLinks).map(([categoryId, links]) => {
-                const category = categories.find(
-                  (cat) => cat.id === categoryId
-                ) || {
-                  name: "Uncategorized",
-                  color: "#ccc",
-                };
+              // --- GROUPED LINKS VIEW WITH DRAGGIN ---
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCorners}
+                onDragEnd={reorderCategories}
+              >
+                <SortableContext
+                  items={sortedCategories
+                    .map((cat) => cat.id)
+                    .concat(["uncategorized"])}
+                  strategy={rectSortingStrategy}
+                >
+                  {sortedCategories.map((category) => {
+                    const categoryLinks = groupedLinks[category.id] || [];
 
-                return (
-                  <CategoryContainer
-                    key={categoryId}
-                    category={category}
-                    links={links}
-                  />
-                );
-              })
+                    if (categoryLinks.length === 0) return null;
+
+                    return (
+                      <DraggableCategoryGroup
+                        key={category.id}
+                        categoryId={category.id}
+                        category={category}
+                        links={categoryLinks}
+                        onOpenAll={openAllLinks}
+                      />
+                    );
+                  })}
+                  {/* uncategorized section */}
+                  {groupedLinks["uncategorized"] && (
+                    <DraggableCategoryGroup
+                      key="uncategorized"
+                      categoryId="uncategorized"
+                      category={{ name: "Uncategorized", color: "#ccc" }}
+                      links={groupedLinks["uncategorized"]}
+                      onOpenAll={openAllLinks}
+                    />
+                  )}
+                </SortableContext>
+              </DndContext>
             ) : (
               // --- SINGLE CATEGORY LINKS VIEW ---
               <DndContext

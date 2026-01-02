@@ -95,6 +95,15 @@ export const categoriesAPI = {
     const response = await api.delete(`/categories/${id}`);
     return response.data;
   },
+
+  // for reorder
+
+  reorder: async (categoriesOrder) => {
+    const response = await api.put("/categories/reorder", {
+      categories: categoriesOrder,
+    });
+    return response.data;
+  },
 };
 
 //////////////////////// links //////////////////////////////////
