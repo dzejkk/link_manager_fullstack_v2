@@ -1,7 +1,7 @@
 .linkCard {
   background: var(--popover);
   color: var(--card-foreground);
-  border: 1px solid var(--border);
+  border: 1px solid transparent;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xs);
   padding-block: 0.75rem;
@@ -11,6 +11,11 @@
   will-change: transform;
   touch-action: manipulation;
   transition: border-color 0.2s ease-in;
+
+  @media (width < 698px) {
+    border-radius: 16px;
+    padding-block: 0.5rem;
+  }
 }
 
 .linkCard:hover {
@@ -36,7 +41,7 @@
   flex: 1;
 
   @media (width < 698px) {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
 }
 
@@ -70,6 +75,9 @@
   font-size: 14px;
   margin-bottom: 12px;
   line-height: 1.5;
+  @media (width < 698px) {
+    margin-bottom: 8px;
+  }
 }
 
 .linkUrl {
@@ -135,6 +143,10 @@
   background-color: var(--background);
   padding: 0.25rem;
   margin-inline-end: 0.5rem;
+
+  @media (width < 698px) {
+    width: 15px;
+  }
 }
 
 /* animation */

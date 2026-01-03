@@ -6,24 +6,46 @@
   margin: 0 0 24px 0;
   font-size: 22px;
   color: var(--foreground);
+
+  @media (width < 698px) {
+    margin: 0 0 16px 0; /* Reduced margin */
+    font-size: 1.125rem;
+  }
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media (width < 698px) {
+    gap: 12px; /* Tighter gap between form items */
+  }
+}
+
+.form > .inputGroup > p {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
 }
 
 .inputGroup {
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  @media (width < 698px) {
+    gap: 4px; /* Label closer to input */
+  }
 }
 
 .inputGroup label {
   font-size: 14px;
   font-weight: 600;
   color: #333;
+
+  @media (width < 698px) {
+    font-size: 13px; /* Slightly smaller label */
+  }
 }
 
 .inputGroup input[type="text"] {
@@ -32,6 +54,14 @@
   border-radius: 8px;
   font-size: 15px;
   transition: border-color 0.3s;
+  width: 100%; /* Ensure it doesn't overflow */
+  box-sizing: border-box;
+
+  @media (width < 698px) {
+    padding: 8px 12px; /* Compact padding */
+    font-size: 14px; /* Smaller font */
+    border-width: 1px; /* Thinner border for mobile elegance */
+  }
 }
 
 .inputGroup input[type="text"]:focus {
@@ -48,6 +78,10 @@
   display: flex;
   align-items: center;
   gap: 16px;
+
+  @media (width < 698px) {
+    gap: 10px;
+  }
 }
 
 .colorInput {
@@ -56,6 +90,11 @@
   border: 2px solid #e0e0e0;
   border-radius: 8px;
   cursor: pointer;
+
+  @media (width < 698px) {
+    width: 50px; /* Smaller touch target */
+    height: 36px;
+  }
 }
 
 .colorInput:disabled {
@@ -66,6 +105,10 @@
 .colorPreview {
   font-size: 18px;
   font-weight: 600;
+
+  @media (width < 698px) {
+    font-size: 16px;
+  }
 }
 
 .error {
@@ -75,12 +118,22 @@
   border-radius: 8px;
   font-size: 14px;
   border: 1px solid #fcc;
+
+  @media (width < 698px) {
+    padding: 8px; /* Less padding on error box */
+    font-size: 13px;
+  }
 }
 
 .formActions {
   display: flex;
   gap: 12px;
   margin-top: 8px;
+
+  @media (width < 698px) {
+    gap: 8px;
+    margin-top: 4px;
+  }
 }
 
 .cancelButton,
@@ -93,6 +146,11 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+
+  @media (width < 698px) {
+    padding: 10px; /* Reduced button height */
+    font-size: 14px;
+  }
 }
 
 .cancelButton {

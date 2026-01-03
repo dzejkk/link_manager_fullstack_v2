@@ -1,5 +1,9 @@
 .dashboard {
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 100dvh;
   background-color: var(--background);
   width: 100%;
   /* max-width: 1600px; */
@@ -9,12 +13,16 @@
 }
 
 .container {
+  flex-shrink: 0;
+  width: 95%; /* adding litle bit of padding*/
+  max-width: 1600px;
+  margin: 0 auto; /* This will center it */
+
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 24px;
   padding: 24px 32px;
   max-width: 1600px;
-  margin: 0 auto;
 
   @media (width < 698px) {
     display: grid;
@@ -22,6 +30,7 @@
     gap: 24px;
     padding: 24px 32px;
     margin: 0 auto;
+    width: 80%;
   }
 }
 
@@ -139,7 +148,7 @@
 .main {
   background: var(--background);
   border-radius: var(--radius-sm);
-  padding: 24px;
+  padding: 15px 0 15px 15px;
   min-height: 600px;
 
   @media (width < 698px) {
@@ -286,6 +295,11 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 
   animation: slide-in 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  @media (width < 698px) {
+    padding: 20px;
+    width: 80%;
+  }
 }
 
 /* ANIIMATIONS */

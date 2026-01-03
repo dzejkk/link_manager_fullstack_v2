@@ -6,24 +6,41 @@
   margin: 0 0 24px 0;
   font-size: 22px;
   color: var(--foreground);
+
+  @media (width < 698px) {
+    margin: 0 0 16px 0;
+    font-size: 1.125rem;
+  }
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media (width < 698px) {
+    gap: 12px;
+  }
 }
 
 .inputGroup {
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  @media (width < 698px) {
+    gap: 4px;
+  }
 }
 
 .inputGroup label {
   font-size: 14px;
   font-weight: 600;
   color: #333;
+
+  @media (width < 698px) {
+    font-size: 13px;
+  }
 }
 
 .inputGroup input[type="text"],
@@ -36,6 +53,13 @@
   font-size: 15px;
   font-family: inherit;
   transition: border-color 0.3s;
+  width: 100%; /* Safety for mobile widths */
+  box-sizing: border-box;
+
+  @media (width < 698px) {
+    padding: 8px 12px; /* Compact padding */
+    font-size: 14px;
+  }
 }
 
 .inputGroup input:focus,
@@ -55,6 +79,10 @@
 .inputGroup textarea {
   resize: vertical;
   min-height: 80px;
+
+  @media (width < 698px) {
+    min-height: 60px; /* Shorter default height for mobile */
+  }
 }
 
 .select {
@@ -72,12 +100,22 @@
   border-radius: 8px;
   font-size: 14px;
   border: 1px solid #fcc;
+
+  @media (width < 698px) {
+    padding: 8px;
+    font-size: 13px;
+  }
 }
 
 .formActions {
   display: flex;
   gap: 12px;
   margin-top: 8px;
+
+  @media (width < 698px) {
+    gap: 8px;
+    margin-top: 4px;
+  }
 }
 
 .cancelButton,
@@ -90,6 +128,11 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+
+  @media (width < 698px) {
+    padding: 10px;
+    font-size: 14px;
+  }
 }
 
 .cancelButton {

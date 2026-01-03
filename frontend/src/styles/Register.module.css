@@ -7,6 +7,12 @@
   padding: 20px;
 
   animation: fade-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  @media (width < 698px) {
+    padding: 12px;
+    align-items: flex-start; /* Better for mobile keyboards */
+    padding-top: 40px;
+  }
 }
 
 .registerBox {
@@ -17,6 +23,11 @@
   box-shadow: var(--shadow-lg);
   width: 100%;
   max-width: 420px;
+
+  @media (width < 698px) {
+    padding: 24px 20px; /* Reduced from 40px */
+    border-radius: var(--radius);
+  }
 }
 
 .registerBox h1 {
@@ -24,6 +35,11 @@
   font-size: 28px;
   color: var(--card-foreground);
   text-align: center;
+
+  @media (width < 698px) {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
 }
 
 .subtitle {
@@ -31,24 +47,41 @@
   color: var(--muted-foreground);
   text-align: center;
   font-size: 14px;
+
+  @media (width < 698px) {
+    margin: 0 0 20px 0;
+    font-size: 13px;
+  }
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 18px;
+
+  @media (width < 698px) {
+    gap: 14px; /* Tighter gap */
+  }
 }
 
 .inputGroup {
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  @media (width < 698px) {
+    gap: 4px;
+  }
 }
 
 .inputGroup label {
   font-size: 14px;
   font-weight: 500;
   color: var(--card-foreground);
+
+  @media (width < 698px) {
+    font-size: 13px;
+  }
 }
 
 .inputGroup input {
@@ -57,6 +90,11 @@
   border-radius: var(--radius);
   font-size: 15px;
   transition: border-color 0.3s;
+
+  @media (width < 698px) {
+    padding: 10px 12px;
+    font-size: 14px; /* Prevents iOS auto-zoom */
+  }
 }
 
 .inputGroup input:focus {
@@ -76,6 +114,11 @@
   border-radius: 8px;
   font-size: 14px;
   border: 1px solid #fcc;
+
+  @media (width < 698px) {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
 }
 
 .registerButton {
@@ -89,6 +132,12 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   margin-top: 10px;
+
+  @media (width < 698px) {
+    padding: 12px;
+    font-size: 15px;
+    margin-top: 6px;
+  }
 }
 
 .registerButton:hover:not(:disabled) {
@@ -110,6 +159,11 @@
   text-align: center;
   color: #666;
   font-size: 14px;
+
+  @media (width < 698px) {
+    margin-top: 20px;
+    font-size: 13px;
+  }
 }
 
 .switchButton {

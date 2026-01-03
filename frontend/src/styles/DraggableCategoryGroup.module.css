@@ -1,5 +1,8 @@
 .categoryGroup {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
   background: var(--popover);
   min-height: 10rem;
   border-radius: 12px;
@@ -12,8 +15,12 @@
   animation: fade-in 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
   will-change: transform;
   touch-action: manipulation;
-  max-height: 200px;
+  max-height: 224px;
   overflow-y: auto;
+
+  @media (width < 698px) {
+    min-height: 8rem;
+  }
 }
 
 .categoryGroup:hover {
@@ -107,9 +114,8 @@
 }
 
 .grabber {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
+  margin-top: auto; /* this pushes item down in flex container */
+  align-self: flex-end;
   color: var(--muted-foreground);
 }
 

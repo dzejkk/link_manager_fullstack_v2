@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "../styles/DashBoard.module.css";
 import CategoryForm from "../components/CategoryForm";
 import LinkForm from "../components/LinkForm";
-import { Plus } from "lucide-react";
+import { FootprintsIcon, Plus } from "lucide-react";
 import Navbar from "../components/Navbar";
 import SideBar from "../components/Sidebar";
 import { useCategories } from "../hooks/useCategories";
@@ -12,6 +12,7 @@ import { getDomain } from "../utils/getDomain";
 import { useDragReorder } from "../hooks/useDragReorder";
 import { useDragReorderCategories } from "../hooks/useDragReorderCategories";
 import { DraggableCategoryGroup } from "../components/DraggableCategoryGroup";
+import CategoryContainer from "../components/CategoryContainer";
 import {
   DndContext,
   KeyboardSensor,
@@ -26,10 +27,10 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   rectSortingStrategy,
-  verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { openAllLinks } from "../utils/openAllLinks";
+import Footer from "../components/Footer";
 
 export default function DashBoard({ onLogout }) {
   // STATE
@@ -182,7 +183,7 @@ export default function DashBoard({ onLogout }) {
                 </button>
               </div>
             ) : selectedCategory === null ? (
-              // --- GROUPED LINKS VIEW WITH DRAGGIN ---
+              // --- GROUPED LINKS VIEW WITH DRAGGIN --- //
               <DndContext
                 sensors={sensors}
                 collisionDetection={closestCorners}
@@ -211,7 +212,7 @@ export default function DashBoard({ onLogout }) {
                   })}
                   {/* uncategorized section */}
                   {groupedLinks["uncategorized"] && (
-                    <DraggableCategoryGroup
+                    <CategoryContainer
                       key="uncategorized"
                       categoryId="uncategorized"
                       category={{ name: "Uncategorized", color: "#ccc" }}
@@ -222,7 +223,7 @@ export default function DashBoard({ onLogout }) {
                 </SortableContext>
               </DndContext>
             ) : (
-              // --- SINGLE CATEGORY LINKS VIEW ---
+              // --- SINGLE CATEGORY LINKS VIEW --- //
               <DndContext
                 sensors={sensors}
                 collisionDetection={closestCorners}
@@ -273,6 +274,7 @@ export default function DashBoard({ onLogout }) {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 }
