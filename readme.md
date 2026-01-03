@@ -49,3 +49,4 @@ at: kontrajakub2gmail.com
 - [x] Link favicons/previews
 - [] User profile/settings page
 - [] forget password options
+- [] dont forget fix bug when second click close modal

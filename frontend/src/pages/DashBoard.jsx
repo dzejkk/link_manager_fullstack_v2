@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "../styles/DashBoard.module.css";
 import CategoryForm from "../components/CategoryForm";
 import LinkForm from "../components/LinkForm";
-import { FootprintsIcon, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import Navbar from "../components/Navbar";
 import SideBar from "../components/Sidebar";
 import { useCategories } from "../hooks/useCategories";
