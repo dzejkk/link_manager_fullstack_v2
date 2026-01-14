@@ -49,7 +49,7 @@ api.interceptors.response.use(
       window.dispatchEvent(new Event("auth:logout"));
 
       //also force reload as backup
-      window.location.reload();
+      // window.location.reload();
     }
 
     return Promise.reject(error);

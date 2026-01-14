@@ -1,5 +1,5 @@
 export default function Footer() {
-  const date = new Date().toLocaleDateString("de-DE").slice(4);
+  const date = new Date().toLocaleDateString("de-DE").slice(5);
 
   return (
     <h2
@@ -12,7 +12,7 @@ export default function Footer() {
         fontWeight: "400",
       }}
     >
-      <p> © {date} Developed by Jakub Kontra </p>
+      <p> © {date} Developed by Jakub Kontra</p>
     </h2>
   );
 }
