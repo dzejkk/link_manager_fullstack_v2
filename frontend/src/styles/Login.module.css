@@ -96,7 +96,7 @@
 
   @media (width < 698px) {
     padding: 10px 12px;
-    font-size: 16px; /* Prevent iOS zoom on focus */
+    font-size: 14px; /* Prevent iOS zoom on focus */
   }
 }
 

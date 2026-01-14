@@ -59,7 +59,7 @@
 
   @media (width < 698px) {
     padding: 8px 12px; /* Compact padding */
-    font-size: 16px; /* Smaller font */
+    font-size: 14px; /* Smaller font */
     border-width: 1px; /* Thinner border for mobile elegance */
   }
 }
