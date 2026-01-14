@@ -173,6 +173,10 @@
   cursor: grabbing;
 }
 
+.graber {
+  touch-action: none;
+}
+
 @keyframes shake {
   0% {
     transform: rotate(4deg);

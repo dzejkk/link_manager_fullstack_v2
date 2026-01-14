@@ -88,12 +88,12 @@
   padding: 12px 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  font-size: 15px;
+  font-size: 16px;
   transition: border-color 0.3s;
 
   @media (width < 698px) {
     padding: 10px 12px;
-    font-size: 14px; /* Prevents iOS auto-zoom */
+    font-size: 16px; /* Prevents iOS auto-zoom */
   }
 }
 

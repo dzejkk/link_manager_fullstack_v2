@@ -13,9 +13,15 @@ export function DraggableLinkCard({ link, onEdit, onDelete, getDomain }) {
     isDragging,
   } = useSortable({ id: link.id });
 
+  const defaultTransition = "border-color 0.2s ease-in";
+
+  const combinedTransition = transition
+    ? `${transition}, ${defaultTransition}`
+    : undefined;
+
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition: transition,
+    transition: combinedTransition,
     opacity: isDragging ? 0.5 : 1,
     zIndex: isDragging ? 1000 : "auto",
     boxShadow: isDragging ? "0 8px 24px rgba(0, 0, 0, 0.2)" : undefined,

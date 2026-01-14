@@ -35,16 +35,21 @@ api.interceptors.request.use(
 // This handles errors globally (like expired tokens)
 api.interceptors.response.use(
   (response) => {
-    // If response is successful, just return it
     return response;
   },
   (error) => {
     // If we get 401 (unauthorized), token might be expired
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 || error.response?.status === 403) {
       // Clear the token and reload to login
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      window.location.href = "/";
+
+      //EMit event  that app.jsx is listening to
+
+      window.dispatchEvent(new Event("auth:logout"));
+
+      //also force reload as backup
+      window.location.reload();
     }
 
     return Promise.reject(error);

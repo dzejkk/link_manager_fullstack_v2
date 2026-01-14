@@ -17,6 +17,7 @@
   touch-action: manipulation;
   max-height: 224px;
   overflow-y: auto;
+  z-index: 10;
 
   @media (width < 698px) {
     min-height: 8rem;
@@ -117,6 +118,7 @@
   margin-top: auto; /* this pushes item down in flex container */
   align-self: flex-end;
   color: var(--muted-foreground);
+  touch-action: none;
 }
 
 .grabber > svg {

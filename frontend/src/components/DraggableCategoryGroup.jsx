@@ -22,18 +22,29 @@ export function DraggableCategoryGroup({
     isDragging,
   } = useSortable({ id: categoryId });
 
+  const defaultTransition =
+    "box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out";
+
+  const combinedTransition = transition
+    ? `${transition}, ${defaultTransition}`
+    : undefined;
+
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition: transition,
+    transition: combinedTransition,
     opacity: isDragging ? 0.5 : 1,
     zIndex: isDragging ? 1000 : "auto",
     boxShadow: isDragging ? "0 8px 24px rgba(0, 0, 0, 0.2)" : undefined,
-    willChange: "transform",
+    willChange: isDragging ? "auto" : "transform",
   };
 
   return (
-    <div style={{ "--hover-color": category.color }}>
-      <div className={styles.categoryGroup} style={style} ref={setNodeRef}>
+    <div>
+      <div
+        className={styles.categoryGroup}
+        style={{ ...style, "--hover-color": category.color }}
+        ref={setNodeRef}
+      >
         <h3
           className={styles.groupTitle}
           style={{ borderLeft: `4px solid ${category.color || "#ccc"}` }}

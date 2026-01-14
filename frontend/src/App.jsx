@@ -20,6 +20,21 @@ function App() {
     }
   }, []);
 
+  // listen for token expiration
+
+  useEffect(() => {
+    const handleAuthLogout = () => {
+      setIsAuthenticated(false);
+      setCurrentPage("login");
+    };
+
+    window.addEventListener("auth:logout", handleAuthLogout);
+
+    return () => {
+      window.removeEventListener("auth:logout", handleAuthLogout);
+    };
+  }, []);
+
   const handleLoginSuccess = () => {
     setIsAuthenticated(true);
     setCurrentPage("dashboard");

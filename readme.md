@@ -1,9 +1,9 @@
 # Link Manager app ver_1
 
 Make order with your links, dont use shitty browser features, use this instead
-u can make custom categories , custom colors codes for categories, and also you can add remarks to your links, also this app have auth so your links are nice and private on PCs where are more users.
+u can make custom categories , custom colors codes for categories, and also you can add remarks to your links, also this app have auth so your links are nice and private on PCs where are more users, laso there is drag and drop feature so you can reorder links as you want.
 try it and let me know which feature you want in the future updates
-at: kontrajakub2gmail.com
+at: kontrajakub@2gmail.com
 
 [LinkManager](https://frontend-production-14d6.up.railway.app/)
 
@@ -36,7 +36,7 @@ at: kontrajakub2gmail.com
 
 - [x] break main dashboard to smaller components
 - [x] check for improvements with AI, expecialy in dashboard component
-- [x] Uncategorized links section (DONE!)
+- [x] Uncategorized links section
 - [x] Custom hooks implemented
 - [x] multiple links open at the same time
 - [] Search bar to filter links
