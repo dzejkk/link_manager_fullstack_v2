@@ -8,7 +8,7 @@ export default function LinkForm({ onClose, editingLink }) {
   const [title, setTitle] = useState(editingLink?.title || "");
   const [url, setUrl] = useState(editingLink?.url || "");
   const [description, setDescription] = useState(
-    editingLink?.description || ""
+    editingLink?.description || "",
   );
   const [categoryId, setCategoryId] = useState(editingLink?.category_id || "");
 
@@ -44,7 +44,7 @@ export default function LinkForm({ onClose, editingLink }) {
       title,
       url,
       description,
-      category_id: categoryId && categoryId !== "" ? categoryId : null, // Convert empty string to null for postgre
+      category_id: categoryId && categoryId !== "" ? categoryId : null, // Convert empty string to null for postgreSQL
     };
 
     // Trigger the mutation
@@ -62,7 +62,7 @@ export default function LinkForm({ onClose, editingLink }) {
           setCategoryId("");
           onClose();
         },
-      }
+      },
     );
   };
 
@@ -132,7 +132,6 @@ export default function LinkForm({ onClose, editingLink }) {
           </select>
         </div>
 
-        {/* Show error if save fails */}
         {isSaving.isError && (
           <div className={styles.error}>
             {isSaving.error.response?.data?.error ||
@@ -146,20 +145,20 @@ export default function LinkForm({ onClose, editingLink }) {
             type="button"
             onClick={onClose}
             className={styles.cancelButton}
-            disabled={isSaving.isPending}
+            disabled={isSaving}
           >
             Cancel
           </button>
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={isSaving.isPending}
+            disabled={isSaving}
           >
-            {isSaving.isPending
+            {isSaving
               ? "Saving..."
               : isEditMode
-              ? "Update Link"
-              : "Create Link"}
+                ? "Update Link"
+                : "Create Link"}
           </button>
         </div>
       </form>

@@ -14,7 +14,7 @@ export const useDragReorder = (links) => {
         if (!oldLinks) return oldLinks;
 
         const orderMap = new Map(
-          linksOrder.map((l) => [l.id, l.display_order])
+          linksOrder.map((l) => [l.id, l.display_order]),
         );
 
         return oldLinks.map((link) => {
@@ -61,7 +61,7 @@ export const useDragReorder = (links) => {
       await updateMutation.mutateAsync(linksOrder);
       setTempLinks(null);
     },
-    [links, updateMutation]
+    [links, updateMutation],
   );
 
   return {

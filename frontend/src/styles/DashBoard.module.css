@@ -279,25 +279,37 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: color-mix(
+    in oklab,
+    var(--destructive) 50%,
+    var(--background) 20%
+  );
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fade-in 0.3s ease-in-out;
+
   @media (width < 698px) {
     align-items: flex-start;
   }
 }
 
 .modal {
-  background: var(--popover);
-  padding: 30px;
-  border-radius: var(--radius-xl);
+  background-color: var(--popover);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-6);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
   max-width: 500px;
-  width: 90%;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  max-height: 85vh;
+  padding: 1.5rem;
+  z-index: 1001;
 
-  animation: slide-in 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  animation: slide-in 0.3s ease-in-out;
 
   @media (width < 698px) {
     padding: 20px;
@@ -320,11 +332,11 @@
 @keyframes slide-in {
   from {
     opacity: 0;
-    transform: translateY(-50%) scale(0.8);
+    transform: translate(-50%, -48%) scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 

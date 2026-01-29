@@ -1,8 +1,9 @@
 import { useState } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
 import styles from "../styles/DashBoard.module.css";
 import CategoryForm from "../components/CategoryForm";
 import LinkForm from "../components/LinkForm";
-import { Plus } from "lucide-react";
+import { Plus, Cross } from "lucide-react";
 import Navbar from "../components/Navbar";
 import SideBar from "../components/Sidebar";
 import { useCategories } from "../hooks/useCategories";
@@ -42,8 +43,14 @@ export default function DashBoard({ onLogout }) {
   const user = JSON.parse(localStorage.getItem("user") || {});
 
   // TANSTACK QUERY = custom hooks
-  const { categories, categoriesLoading, deleteCategory } = useCategories();
-  const { allLinks, linksLoading, linksError, deleteLink } = useLinks();
+  const {
+    categories,
+    categoriesLoading,
+    deleteCategory,
+    isDeleting: isDeletingCategory,
+  } = useCategories();
+  const { allLinks, linksLoading, linksError, deleteLink, isDeleting } =
+    useLinks();
 
   //Drag and drop
 
@@ -140,6 +147,15 @@ export default function DashBoard({ onLogout }) {
       <div className={styles.error}>
         <h2>Oops! Something went wrong</h2>
         <p>{categoriesLoading?.message || linksError?.message}</p>
+      </div>
+    );
+  }
+
+  if (isDeleting || isDeletingCategory) {
+    return (
+      <div className={styles.loading}>
+        <div className={styles.spinner}></div>
+        <p>Deleting your link || category...</p>
       </div>
     );
   }
@@ -249,31 +265,40 @@ export default function DashBoard({ onLogout }) {
         </main>
       </div>
 
-      {/* MODALS */}
-      {isLinkModalOpen && (
-        <div
-          className={styles.modalOverlay}
-          onClick={() => setIsLinkModalOpen(false)}
-        >
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      {/* MODALS used RADIX UI for best ACCESABILITY AND CUSTOM DESIGN */}
+
+      {/* LINK FORM */}
+      <Dialog.Root open={isLinkModalOpen} onOpenChange={setIsLinkModalOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className={styles.modalOverlay} />
+          <Dialog.Content
+            className={styles.modal}
+            onInteractOutside={(e) => e.preventDefault()}
+          >
             <LinkForm
               onClose={() => setIsLinkModalOpen(false)}
               editingLink={editingLink}
             />
-          </div>
-        </div>
-      )}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
 
-      {isCategoryModalOpen && (
-        <div
-          className={styles.modalOverlay}
-          onClick={() => setIsCategoryModalOpen(false)}
-        >
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      {/* Category FORM */}
+      <Dialog.Root
+        open={isCategoryModalOpen}
+        onOpenChange={setIsCategoryModalOpen}
+      >
+        <Dialog.Portal>
+          <Dialog.Overlay className={styles.modalOverlay} />
+          <Dialog.Content
+            className={styles.modal}
+            onInteractOutside={(e) => e.preventDefault()}
+          >
             <CategoryForm onClose={() => setIsCategoryModalOpen(false)} />
-          </div>
-        </div>
-      )}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+
       <Footer />
     </div>
   );

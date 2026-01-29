@@ -33,7 +33,7 @@ export function DraggableLinkCard({ link, onEdit, onDelete, getDomain }) {
       <div className={styles.linkHeader}>
         <img
           src={`https://www.google.com/s2/favicons?domain=${getDomain(
-            link.url
+            link.url,
           )}&sz=32`}
           alt="favicon"
           className={styles.favicon}

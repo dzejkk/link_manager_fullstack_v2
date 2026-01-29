@@ -21,7 +21,7 @@ export const useDragReorderCategories = (categories) => {
         if (!oldCategories) return [];
 
         const orderMap = new Map(
-          categoriesOrder.map((c) => [c.id, c.display_order])
+          categoriesOrder.map((c) => [c.id, c.display_order]),
         );
 
         const newCategories = oldCategories.map((category) => {
@@ -80,7 +80,7 @@ export const useDragReorderCategories = (categories) => {
         setTempCategories(null);
       }
     },
-    [categories, updateMutation]
+    [categories, updateMutation],
   );
 
   return {
