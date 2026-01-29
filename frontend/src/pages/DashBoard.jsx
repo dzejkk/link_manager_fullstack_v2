@@ -57,7 +57,7 @@ export default function DashBoard({ onLogout }) {
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   /// HANDLERS ///
@@ -92,10 +92,10 @@ export default function DashBoard({ onLogout }) {
           .filter((link) => link.category_id === null)
           .sort((a, b) => a.display_order - b.display_order)
       : selectedCategory
-      ? allLinks
-          .filter((link) => link.category_id === selectedCategory)
-          .sort((a, b) => a.display_order - b.display_order)
-      : allLinks.sort((a, b) => a.display_order - b.display_order);
+        ? allLinks
+            .filter((link) => link.category_id === selectedCategory)
+            .sort((a, b) => a.display_order - b.display_order)
+        : allLinks.sort((a, b) => a.display_order - b.display_order);
 
   // DND
   const { reorder, dragItems } = useDragReorder(displayedLinks);
@@ -119,7 +119,7 @@ export default function DashBoard({ onLogout }) {
   if (groupedLinks) {
     Object.keys(groupedLinks).forEach((categoryId) => {
       groupedLinks[categoryId].sort(
-        (a, b) => a.display_order - b.display_order
+        (a, b) => a.display_order - b.display_order,
       );
     });
   }

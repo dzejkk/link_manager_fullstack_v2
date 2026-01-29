@@ -93,7 +93,7 @@
 
   @media (width < 698px) {
     padding: 10px 12px;
-    font-size: 14px; /* Prevents iOS auto-zoom */
+    font-size: 14px; /*must be  above 15 to disable auto zoom*/
   }
 }
 

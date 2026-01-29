@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setIsAuthenticated(true), setCurrentPage("dashboard");
+      (setIsAuthenticated(true), setCurrentPage("dashboard"));
     }
   }, []);
 

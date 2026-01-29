@@ -44,12 +44,11 @@ api.interceptors.response.use(
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
-      //EMit event  that app.jsx is listening to
-
+      //Emit event  that app.jsx is listening to
       window.dispatchEvent(new Event("auth:logout"));
 
       //also force reload as backup
-      // window.location.reload();
+      window.location.reload();
     }
 
     return Promise.reject(error);
