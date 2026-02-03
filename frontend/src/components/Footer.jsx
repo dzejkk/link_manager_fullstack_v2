@@ -1,5 +1,5 @@
 export default function Footer() {
-  const date = new Date().toLocaleDateString("de-DE").slice(5);
+  const date = new Date().getFullYear();
 
   return (
     <h2
