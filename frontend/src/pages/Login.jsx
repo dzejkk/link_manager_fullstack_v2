@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { authAPI } from "../services/api";
 import styles from "../styles/Login.module.css";
+import logo from "../assets/alterantive_logo_2 1 1.svg";
 
 function Login({ onSuccess, onSwitchToRegister }) {
   // local state
@@ -97,6 +98,11 @@ function Login({ onSuccess, onSwitchToRegister }) {
             Register here
           </button>
         </p>
+        <img
+          src={logo}
+          alt="logo"
+          style={{ width: "38px", display: "block", margin: " 1rem auto" }}
+        />
       </div>
     </div>
   );

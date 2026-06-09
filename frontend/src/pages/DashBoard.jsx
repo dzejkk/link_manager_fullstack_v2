@@ -40,7 +40,7 @@ export default function DashBoard({ onLogout }) {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [editingLink, setEditingLink] = useState(null);
 
-  const user = JSON.parse(localStorage.getItem("user") || {});
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   // TANSTACK QUERY = custom hooks
   const {
@@ -223,6 +223,7 @@ export default function DashBoard({ onLogout }) {
                         category={category}
                         links={categoryLinks}
                         onOpenAll={openAllLinks}
+                        setSelectedCategory={setSelectedCategory}
                       />
                     );
                   })}
@@ -274,10 +275,13 @@ export default function DashBoard({ onLogout }) {
           <Dialog.Content
             className={styles.modal}
             onInteractOutside={(e) => e.preventDefault()}
+            aria-describedby={undefined}
           >
+            <Dialog.DialogTitle />
             <LinkForm
               onClose={() => setIsLinkModalOpen(false)}
               editingLink={editingLink}
+              selectedCategory={selectedCategory}
             />
           </Dialog.Content>
         </Dialog.Portal>
@@ -293,7 +297,9 @@ export default function DashBoard({ onLogout }) {
           <Dialog.Content
             className={styles.modal}
             onInteractOutside={(e) => e.preventDefault()}
+            aria-describedby={undefined}
           >
+            <Dialog.DialogTitle />
             <CategoryForm onClose={() => setIsCategoryModalOpen(false)} />
           </Dialog.Content>
         </Dialog.Portal>

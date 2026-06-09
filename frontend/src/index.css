@@ -1,11 +1,11 @@
 :root {
   --background: #faf9f5;
-  --foreground: oklch(0.34 0.03 94.42);
+  --foreground: #3d3826;
   --card: oklch(0.98 0.01 93.48);
   --card-foreground: oklch(0.19 0 0);
   --popover: oklch(100% 0.00011 271.152);
   --popover-foreground: oklch(0.27 0.02 99.7);
-  --primary: oklch(0.62 0.14 39.15);
+  --primary: #cb6441;
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.92 0.01 87.42);
   --secondary-foreground: oklch(0.43 0.02 99.33);
@@ -16,9 +16,9 @@
   --destructive: oklch(0.19 0 0);
   --border: oklch(0.88 0.01 100.76);
   --input: oklch(0.76 0.02 96.91);
-  --ring: oklch(0.59 0.17 252.92);
+  --ring: #1a7ede;
   --chart-1: oklch(0.56 0.13 42.95);
-  --chart-2: oklch(0.69 0.16 290.29);
+  --chart-2: #9c87f6;
   --chart-3: oklch(0.88 0.03 91.64);
   --chart-4: oklch(0.88 0.04 298.21);
   --chart-5: oklch(0.56 0.13 41.94);

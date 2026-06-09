@@ -35,6 +35,12 @@
   padding-left: 0.5rem;
   margin-bottom: 0.5rem;
   color: var(--card-foreground);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.groupTitle:hover {
+  border-width: 8px;
 }
 
 /* Auto-placement by column */

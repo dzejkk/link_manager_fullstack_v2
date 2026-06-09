@@ -85,7 +85,7 @@
 }
 
 .logo {
-  width: 38px;
+  width: 36px;
   padding-inline: 0.5rem;
 
   @media (width < 698px) {

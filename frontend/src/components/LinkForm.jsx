@@ -3,14 +3,16 @@ import styles from "../styles/LinkForm.module.css";
 import { useLinks } from "../hooks/useLinks";
 import { useCategories } from "../hooks/useCategories";
 
-export default function LinkForm({ onClose, editingLink }) {
+export default function LinkForm({ onClose, editingLink, selectedCategory }) {
   // STATE
   const [title, setTitle] = useState(editingLink?.title || "");
   const [url, setUrl] = useState(editingLink?.url || "");
   const [description, setDescription] = useState(
     editingLink?.description || "",
   );
-  const [categoryId, setCategoryId] = useState(editingLink?.category_id || "");
+  const [categoryId, setCategoryId] = useState(
+    editingLink?.category_id || selectedCategory || "",
+  ); // important line for preselecting  categy from drop down !!, it first check if we are editing like if we are not then puts selectedcategory to the options bar
 
   //TANSTACK QUERY - check hook folder
   const { categories } = useCategories();
@@ -123,7 +125,7 @@ export default function LinkForm({ onClose, editingLink }) {
             disabled={isSaving.isPending}
             className={styles.select}
           >
-            <option value="">No Category</option>
+            <option value="">select category</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -145,14 +147,14 @@ export default function LinkForm({ onClose, editingLink }) {
             type="button"
             onClick={onClose}
             className={styles.cancelButton}
-            disabled={isSaving}
+            disabled={isSaving.isPending}
           >
             Cancel
           </button>
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={isSaving}
+            disabled={isSaving.isPending}
           >
             {isSaving
               ? "Saving..."
