@@ -59,16 +59,17 @@
 }
 
 .categoryItem {
-  padding: 12px;
-  margin-bottom: 8px;
-  border-radius: var(--radius);
+  padding: 10px;
+  margin-bottom: 6px;
+  border-radius: 1px 5px 5px 1px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: background-color 0.2s;
   font-weight: 400;
   font-size: 1.25rem;
+
+  transition: all 0.2s ease-in-out;
 
   @media (width < 698px) {
     padding: 8px;
@@ -83,7 +84,10 @@
 
 .categoryItem.active {
   background-color: var(--accent);
-  font-weight: 600;
+  border-left-width: 8px;
+  text-shadow:
+    0.2px 0 0 currentColor,
+    -0.2px 0 0 currentColor;
 }
 
 .categoryActions {
@@ -97,6 +101,7 @@
   border-radius: 12px;
   font-size: 12px;
   color: var(--destructive);
+  font-weight: 700;
 }
 
 .deleteBtn {

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "../styles/Sidebar.module.css";
 import { Plus } from "lucide-react";
 
@@ -9,6 +10,8 @@ const SideBar = ({
   categories,
   handleDeleteCategory,
 }) => {
+  const [hovered, setHovered] = useState(null);
+
   return (
     <div>
       <aside className={styles.sidebar}>
@@ -45,19 +48,29 @@ const SideBar = ({
           return (
             <div
               key={category.id}
+              onMouseEnter={() => setHovered(category.id)}
+              onMouseLeave={() => setHovered(null)}
+              style={{
+                borderLeft: `0px solid ${category.color || "#ccc"}`,
+                // Skontrolujeme, či je hovernuté ID rovnaké ako ID tohto itemu
+                borderLeftWidth:
+                  hovered === category.id || selectedCategory === category.id
+                    ? "16px"
+                    : "0px",
+              }}
               className={`${styles.categoryItem} ${
                 selectedCategory === category.id ? styles.active : ""
               }`}
               onClick={() => setSelectedCategory(category.id)}
             >
-              <span>{category.name}</span>
+              <span
+                style={{ borderColor: category.color }}
+                className={styles.sidebarSpan}
+              >
+                {category.name}
+              </span>
               <div className={styles.categoryActions}>
-                <span
-                  style={{ background: category.color }}
-                  className={styles.count}
-                >
-                  {linkCount}
-                </span>
+                <span className={styles.count}>{linkCount}</span>
                 <button
                   onClick={(e) => {
                     e.stopPropagation(); // Don't trigger category selection

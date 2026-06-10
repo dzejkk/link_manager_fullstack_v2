@@ -57,7 +57,22 @@ export default function DashBoard({ onLogout }) {
   // Event handlers
   const handleDeleteLink = (linkId) => {
     if (window.confirm("Are you sure you want to delete this link?")) {
-      deleteLink(linkId);
+      deleteLink(linkId, {
+        onSuccess: () => {
+          // After deletion, check if current category is now empty
+          if (selectedCategory !== null) {
+            // Get remaining links in this category
+            const remainingLinks = displayedLinks.filter(
+              (link) => link.id !== linkId,
+            );
+
+            // If no links left in this category, show all links
+            if (remainingLinks.length === 0) {
+              setSelectedCategory(null);
+            }
+          }
+        },
+      });
     }
   };
 
