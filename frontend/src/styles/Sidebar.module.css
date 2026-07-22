@@ -59,6 +59,7 @@
 }
 
 .categoryItem {
+  position: relative;
   padding: 10px;
   margin-bottom: 6px;
   border-radius: 1px 5px 5px 1px;
@@ -76,20 +77,34 @@
     font-size: 1rem;
     margin-bottom: 4px;
   }
+
+  box-shadow: inset 0 0 0 0 var(--category-color);
 }
 
-.categoryItem:hover {
-  background-color: var(--accent);
+.categoryItem > span:first-of-type {
+  display: inline-block;
+  padding-left: 8px;
+
+  /* treba pouzit selector > + first-of-type */
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.categoryItem.active {
-  background-color: var(--accent);
-  border-left-width: 8px;
+/* HOVER stav alebo SELECTED stav z Reactu */
+.categoryItem:hover,
+.categoryItem.selected {
+  box-shadow: inset 16px 0 0 0 var(--category-color);
   text-shadow:
     0.2px 0 0 currentColor,
     -0.2px 0 0 currentColor;
+  background-color: var(--accent);
 }
 
+.categoryItem:hover > span:first-of-type,
+.categoryItem.selected > span:first-of-type {
+  /* Plynulý posun textu o 12px doprava (16px výsledný - 4px pôvodný border) */
+  transform: translateX(12px);
+}
+/* ///////////////// */
 .categoryActions {
   display: flex;
   align-items: center;

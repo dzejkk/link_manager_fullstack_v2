@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "../styles/Sidebar.module.css";
 import { Plus } from "lucide-react";
 
@@ -10,8 +9,6 @@ const SideBar = ({
   categories,
   handleDeleteCategory,
 }) => {
-  const [hovered, setHovered] = useState(null);
-
   return (
     <div>
       <aside className={styles.sidebar}>
@@ -29,7 +26,7 @@ const SideBar = ({
         {/* "All Links" option */}
         <div
           className={`${styles.categoryItem} ${
-            selectedCategory === null ? styles.active : ""
+            selectedCategory === null ? styles.selected : ""
           }`}
           onClick={() => setSelectedCategory(null)}
         >
@@ -48,27 +45,15 @@ const SideBar = ({
           return (
             <div
               key={category.id}
-              onMouseEnter={() => setHovered(category.id)}
-              onMouseLeave={() => setHovered(null)}
               style={{
-                borderLeft: `0px solid ${category.color || "#ccc"}`,
-                // Skontrolujeme, či je hovernuté ID rovnaké ako ID tohto itemu
-                borderLeftWidth:
-                  hovered === category.id || selectedCategory === category.id
-                    ? "16px"
-                    : "0px",
+                "--category-color": category.color || "#ccc",
               }}
               className={`${styles.categoryItem} ${
-                selectedCategory === category.id ? styles.active : ""
+                selectedCategory === category.id ? styles.selected : ""
               }`}
               onClick={() => setSelectedCategory(category.id)}
             >
-              <span
-                style={{ borderColor: category.color }}
-                className={styles.sidebarSpan}
-              >
-                {category.name}
-              </span>
+              <span>{category.name}</span>
               <div className={styles.categoryActions}>
                 <span className={styles.count}>{linkCount}</span>
                 <button

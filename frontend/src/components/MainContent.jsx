@@ -46,6 +46,7 @@ export default function MainContent({
             sensors={sensors}
             reorderCategories={reorderCategories}
             setSelectedCategory={setSelectedCategory}
+            selectedCategory={selectedCategory}
           />
         ) : (
           <SingleCategoryView
@@ -78,6 +79,7 @@ function GroupedLinksView({
   sensors,
   reorderCategories,
   setSelectedCategory,
+  selectedCategory,
 }) {
   const categoryIds = sortedCategories
     .map((cat) => cat.id)
@@ -102,6 +104,7 @@ function GroupedLinksView({
               links={categoryLinks}
               onOpenAll={openAllLinks}
               setSelectedCategory={setSelectedCategory}
+              selectedCategory={selectedCategory}
             />
           );
         })}

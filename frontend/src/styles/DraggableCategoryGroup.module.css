@@ -31,16 +31,37 @@
 
 .groupTitle {
   font-size: 1.1rem;
+  position: relative;
   font-weight: 600;
   padding-left: 0.5rem;
   margin-bottom: 0.5rem;
   color: var(--card-foreground);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+
+  box-shadow: inset 4px 0 0 0 var(--category-color);
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.groupTitle:hover {
-  border-width: 8px;
+.groupTitle span {
+  display: inline-block;
+  padding-left: 4px;
+
+  /* Výkonný prechod pre posun textu (rieši GPU) */
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. HOVER stav alebo SELECTED stav z Reactu */
+.groupTitle:hover,
+.groupTitle.selected {
+  /* Zväčšenie hrúbky na 16px cez GPU  malo by to  mat lepsi performance*/
+  box-shadow: inset 16px 0 0 0 var(--category-color);
+}
+
+.groupTitle:hover span,
+.groupTitle.selected span {
+  /* Plynulý posun textu o 12px doprava (16px výsledný - 4px pôvodný border) */
+  transform: translateX(12px);
 }
 
 /* Auto-placement by column */

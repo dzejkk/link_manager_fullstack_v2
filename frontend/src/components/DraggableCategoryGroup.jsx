@@ -1,5 +1,4 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { useState } from "react";
 import { CSS } from "@dnd-kit/utilities";
 import styles from "../styles/DraggableCategoryGroup.module.css";
 import {
@@ -14,6 +13,7 @@ export function DraggableCategoryGroup({
   links,
   onOpenAll,
   setSelectedCategory,
+  selectedCategory,
 }) {
   const {
     attributes,
@@ -23,8 +23,6 @@ export function DraggableCategoryGroup({
     transition,
     isDragging,
   } = useSortable({ id: categoryId });
-
-  const [hovered, setHovered] = useState(false);
 
   const defaultTransition =
     "box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out";
@@ -50,16 +48,13 @@ export function DraggableCategoryGroup({
         ref={setNodeRef}
       >
         <h3
-          className={styles.groupTitle}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          className={`${styles.groupTitle} ${selectedCategory === categoryId ? styles.selected : ""}`}
           style={{
-            borderLeft: `4px solid ${category.color || "#ccc"}`,
-            borderLeftWidth: hovered ? "16px" : "4px",
+            "--category-color": category.color || "#ccc",
           }}
           onClick={() => setSelectedCategory(categoryId)}
         >
-          {category.name || "Uncategorized"}
+          <span>{category.name || "Uncategorized"}</span>
         </h3>
 
         <ul className={styles.compactList}>
